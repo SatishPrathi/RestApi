@@ -1,0 +1,9 @@
+<div class="welcome-container">
+  <h2>Welcome, {{ username }}!</h2>
+  <p>You are logged in as an {{ role }}.</p>
+  <!-- Example link to navigate to EmployeeListComponent for ROLE_EMPLOYEE -->
+  <a *ngIf="role === 'employee'" routerLink="/employees">View Employee List</a>
+</div>
+<div>
+  <button (click)="logout()">Logoff</button>
+</div>
