@@ -3,16 +3,16 @@ package restapidemo
 
 class UrlMappings {
     static mappings = {
-        "/Employee/$id?"(controller: "employee", parseRequest: true) {
+        "/employee/$id?"(controller: "employee", parseRequest: true) {
             action = [PUT: "update"]
         }
-        "/Employee"(controller: "employee", parseRequest: true) {
+        "/employee"(controller: "employee", parseRequest: true) {
             action = [POST: "save"]
         }
-        "/Employee/list"(controller: "employee", parseRequest: true) {
+        "/employee/list"(controller: "employee", parseRequest: true) {
             action = [GET: "list"]
         }
-        "/Employee/create"(controller: "employee", parseRequest: true) {
+        "/employee/create"(controller: "employee", parseRequest: true) {
             action = [POST: "create"]
         }
         "/"(view: "/index")

@@ -43,8 +43,8 @@ grails.plugin.springsecurity.interceptUrlMap = [
     [pattern: '/**/images/**',   access: ['permitAll']],
     [pattern: '/**/favicon.ico', access: ['permitAll']],
     [pattern: '/api/login',      access: ['permitAll']],
-    [pattern: '/api/logout',     access: ['isFullyAuthenticated()']],
-    [pattern: '/Employee/**',    access: ['isAuthenticated()']]
+    [pattern: '/api/logout',     access: ['permitAll']],
+    [pattern: '/employee/**',    access: ['permitAll']]
 ]
 
 grails.plugin.springsecurity.filterChain.chainMap = [
