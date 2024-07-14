@@ -19,6 +19,9 @@ class UrlMappings {
         "/employee/update"(controller: "employee", parseRequest: true) {
             action = [PUT: "update"]
         }
+        "/employee/delete"(controller: "employee", parseRequest: true) {
+            action = [DELETE: "update"]
+        }
         "/"(view: "/index")
         "500"(view:'/error')
     }

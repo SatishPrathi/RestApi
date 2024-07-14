@@ -33,7 +33,7 @@ class EmployeeService {
             def validationErrors = employeeInstance.errors.allErrors.collect {
                 "${it.field} ${it.defaultMessage}"
             }.join('; ')
-            throw new RuntimeException("Validation failed while updating employee: $validationErrors")
+            /*throw new RuntimeException("Validation failed while updating employee: $validationErrors")*/
         }
 
         if (!employeeInstance.save(flush: true)) {
@@ -48,8 +48,8 @@ class EmployeeService {
         if (employee.validate()) {
             employee.save(flush: true)
             return employee
-        } else {
+        }/* else {
             throw new RuntimeException("Employee validation failed: ${employee.errors}")
-        }
+        }*/
     }
 }
