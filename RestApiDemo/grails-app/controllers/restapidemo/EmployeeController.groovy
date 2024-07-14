@@ -16,26 +16,19 @@ class EmployeeController extends RestfulController<Employee> {
     }
 
     // PUT request to update an employee
-    def update(Long id) {
-        def employeeInstance = Employee.get(id)
-        if (!employeeInstance) {
-            notFound()
+    def update() {
+        def employeeParams = request.JSON
+        if (!employeeParams.id) {
+            render(status: BAD_REQUEST, text: "Employee id must be provided.")
             return
         }
 
-        if (request.JSON) {
-            bindData(employeeInstance, request.JSON)
-        } else {
-            respond employeeInstance.errors, view: 'edit'
-            return
+        try {
+            Employee employeeInstance = employeeService.updateEmployee(employeeParams.id, employeeParams)
+            respond employeeInstance, [status: OK]
+        } catch (RuntimeException e) {
+            render(status: BAD_REQUEST, text: e.message)
         }
-
-        if (!employeeInstance.save(flush: true)) {
-            respond employeeInstance.errors, view: 'edit'
-            return
-        }
-
-        respond employeeInstance, [status: OK]
     }
 
     // POST request to create a new employee

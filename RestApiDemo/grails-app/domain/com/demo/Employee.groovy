@@ -1,8 +1,13 @@
+// File: grails-app/domain/com/demo/Employee.groovy
+
 package com.demo
 
-class Employee implements Serializable {
+import grails.compiler.GrailsCompileStatic
+import grails.gorm.annotation.Entity
 
-    private static final long serialVersionUID = 1
+@Entity
+@GrailsCompileStatic
+class Employee {
 
     String empId
     String empFname
