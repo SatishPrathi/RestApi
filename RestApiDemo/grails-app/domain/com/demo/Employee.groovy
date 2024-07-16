@@ -1,5 +1,3 @@
-// File: grails-app/domain/com/demo/Employee.groovy
-
 package com.demo
 
 import grails.compiler.GrailsCompileStatic
@@ -23,5 +21,10 @@ class Employee {
         age nullable: false, min: 18
         address nullable: true
         department nullable: true
+    }
+    
+    static mapping = {
+        id name: 'empId', generator: 'assigned'
+        version false
     }
 }

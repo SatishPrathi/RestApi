@@ -76,7 +76,7 @@ environments:
        username: postgres
        password: satishkumar
        dbCreate: update
-       url: jdbc:postgresql://localhost:5432/SK
+       url: jdbc:postgresql://localhost:5432/SP
       #pooled: true
       #jmxExport: true
       #driverClassName: org.h2.Driver
