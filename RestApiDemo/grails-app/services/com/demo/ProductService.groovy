@@ -5,14 +5,18 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class ProductService {
 
-    Map createProduct(Map productParams, String role) {
+    Map createProduct(Map productParams, String owner) {
         try {
-            // Check if the role is authorized to create a product
-            if (!role.equals("PRODUCT_OWNER")) {
-                return [status: 403, message: "You do not have permission to create a product."]
+            // Validate if required fields are present
+            if (!productParams.name || !productParams.price || !productParams.discount || !productParams.location || !productParams.category) {
+                return [status: 400, message: "Required fields missing for creating product."]
             }
 
+            // Create a new Product instance
             Product product = new Product(productParams)
+            product.owner = owner // Set the owner from the logged-in user
+
+            // Validate the product instance
             if (!product.validate()) {
                 def validationErrors = product.errors.allErrors.collect {
                     "${it.field} ${it.defaultMessage}"
@@ -20,6 +24,7 @@ class ProductService {
                 return [status: 400, message: "Product validation failed: $validationErrors"]
             }
 
+            // Save the product instance
             if (!product.save(flush: true)) {
                 def saveErrors = product.errors.allErrors.collect {
                     "${it.field} ${it.defaultMessage}"
@@ -33,16 +38,17 @@ class ProductService {
         }
     }
 
-    Map updateProduct(String productId, Map productParams, String role) {
+    Map updateProduct(String productId, Map productParams, String owner) {
         try {
-            // Check if the role is authorized to update a product
-            if (!role.equals("PRODUCT_OWNER")) {
-                return [status: 403, message: "You do not have permission to update this product."]
-            }
-
+            // Find the existing product by productId
             Product productInstance = Product.findByProductId(productId)
             if (!productInstance) {
                 return [status: 404, message: "Product with id $productId not found."]
+            }
+
+            // Check ownership and authorization
+            if (!productInstance.owner.equals(owner)) {
+                return [status: 403, message: "You do not have permission to update this product."]
             }
 
             // Update allowed fields if provided in productParams
@@ -83,18 +89,20 @@ class ProductService {
         }
     }
 
-    Map deleteProduct(String productId, String role) {
+    Map deleteProduct(String productId, String owner) {
         try {
-            // Check if the role is authorized to delete a product
-            if (!role.equals("PRODUCT_OWNER")) {
-                return [status: 403, message: "You do not have permission to delete this product."]
-            }
-
+            // Find the existing product by productId
             Product productInstance = Product.findByProductId(productId)
             if (!productInstance) {
                 return [status: 404, message: "Product with id $productId not found."]
             }
 
+            // Check ownership and authorization
+            if (!productInstance.owner.equals(owner)) {
+                return [status: 403, message: "You do not have permission to delete this product."]
+            }
+
+            // Delete the product instance
             productInstance.delete(flush: true)
             return [status: 200, message: "Product deleted successfully."]
         } catch (Exception e) {
@@ -102,15 +110,10 @@ class ProductService {
         }
     }
 
-    Map listProducts(String role) {
+    Map listProducts(String owner) {
         try {
-            // List products based on the role
-            def products
-            if (role.equals("PRODUCT_OWNER")) {
-                products = Product.findAll()
-            } else {
-                products = Product.list()
-            }
+            // List products based on the owner
+            def products = Product.findAllByOwner(owner)
             return [status: 200, products: products]
         } catch (Exception e) {
             return [status: 500, message: "Internal server error: ${e.message}"]

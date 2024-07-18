@@ -6,7 +6,7 @@ import grails.rest.RestfulController
 
 class ProductController extends RestfulController<Product> {
     static responseFormats = ['json', 'xml']
-
+    
     ProductService productService
 
     ProductController(ProductService productService) {
@@ -17,7 +17,8 @@ class ProductController extends RestfulController<Product> {
     // POST request to create a new product
     def create() {
         def productParams = request.JSON
-        def result = productService.createProduct(productParams, getCurrentUserRole())
+        def currentUser = getCurrentUser() // Fetch current user details
+        def result = productService.createProduct(productParams, currentUser)
 
         if (result.status == 201) {
             respond result.product, [status: result.status]
@@ -34,7 +35,8 @@ class ProductController extends RestfulController<Product> {
             return
         }
 
-        def result = productService.updateProduct(productParams.productId, productParams, getCurrentUserRole())
+        def currentUser = getCurrentUser() // Fetch current user details
+        def result = productService.updateProduct(productParams.productId, productParams, currentUser)
         if (result.status == 200) {
             respond result.product, [status: result.status]
         } else {
@@ -50,13 +52,15 @@ class ProductController extends RestfulController<Product> {
             return
         }
 
-        def result = productService.deleteProduct(productParams.productId, getCurrentUserRole())
+        def currentUser = getCurrentUser() // Fetch current user details
+        def result = productService.deleteProduct(productParams.productId, currentUser)
         render(status: result.status, text: result.message)
     }
 
     // GET request to list products
     def list() {
-        def result = productService.listProducts(getCurrentUserRole())
+        def currentUser = getCurrentUser() // Fetch current user details
+        def result = productService.listProducts(currentUser)
         if (result.status == 200) {
             respond result.products, [status: result.status]
         } else {
@@ -64,8 +68,8 @@ class ProductController extends RestfulController<Product> {
         }
     }
 
-    private String getCurrentUserRole() {
-        
-        return "PRODUCT_OWNER"
+    private getCurrentUser() {
+       
+        return "satish kumar"
     }
 }
