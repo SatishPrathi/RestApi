@@ -5,118 +5,84 @@ import grails.gorm.transactions.Transactional
 @Transactional
 class ProductService {
 
-    Map createProduct(Map productParams, String owner) {
+    def createProduct(Map productParams, AppUser currentUser) {
         try {
-            // Validate if required fields are present
-            if (!productParams.name || !productParams.price || !productParams.discount || !productParams.location || !productParams.category) {
-                return [status: 400, message: "Required fields missing for creating product."]
+            def product = new Product(productParams)
+            product.owner = currentUser
+
+            if (product.save(flush: true)) {
+                return [status: 201, product: product]
+            } else {
+                return [status: 400, message: "Failed to create product. Errors: ${product.errors.allErrors.collect { it.defaultMessage }.join(', ')}"]
             }
-
-            // Create a new Product instance
-            Product product = new Product(productParams)
-            product.owner = owner // Set the owner from the logged-in user
-
-            // Validate the product instance
-            if (!product.validate()) {
-                def validationErrors = product.errors.allErrors.collect {
-                    "${it.field} ${it.defaultMessage}"
-                }.join('; ')
-                return [status: 400, message: "Product validation failed: $validationErrors"]
-            }
-
-            // Save the product instance
-            if (!product.save(flush: true)) {
-                def saveErrors = product.errors.allErrors.collect {
-                    "${it.field} ${it.defaultMessage}"
-                }.join('; ')
-                return [status: 400, message: "Error creating product: $saveErrors"]
-            }
-
-            return [status: 201, product: product]
         } catch (Exception e) {
-            return [status: 500, message: "Internal server error: ${e.message}"]
+            return [status: 500, message: "Internal server error while creating product. ${e.message}"]
         }
     }
 
-    Map updateProduct(String productId, Map productParams, String owner) {
+    def updateProduct(String productId, Map productParams, AppUser currentUser) {
         try {
-            // Find the existing product by productId
-            Product productInstance = Product.findByProductId(productId)
-            if (!productInstance) {
-                return [status: 404, message: "Product with id $productId not found."]
+            def product = Product.findByProductId(productId)
+            
+            if (!product) {
+                return [status: 404, message: "Product not found."]
             }
 
-            // Check ownership and authorization
-            if (!productInstance.owner.equals(owner)) {
+            if (!currentUser.getAuthorities().any { it.authority == 'ROLE_PRODUCT_ADMIN' } && product.owner != currentUser) {
                 return [status: 403, message: "You do not have permission to update this product."]
             }
 
-            // Update allowed fields if provided in productParams
-            if (productParams.name) {
-                productInstance.name = productParams.name
-            }
-            if (productParams.price) {
-                productInstance.price = productParams.price
-            }
-            if (productParams.discount) {
-                productInstance.discount = productParams.discount
-            }
-            if (productParams.location) {
-                productInstance.location = productParams.location
-            }
-            if (productParams.category) {
-                productInstance.category = productParams.category
-            }
+            product.properties = productParams
 
-            // Validate and save the updated product instance
-            if (!productInstance.validate()) {
-                def validationErrors = productInstance.errors.allErrors.collect {
-                    "${it.field} ${it.defaultMessage}"
-                }.join('; ')
-                return [status: 400, message: "Validation failed while updating product: $validationErrors"]
+            if (product.save(flush: true)) {
+                return [status: 200, product: product]
+            } else {
+                return [status: 400, message: "Failed to update product. Errors: ${product.errors.allErrors.collect { it.defaultMessage }.join(', ')}"]
             }
-
-            if (!productInstance.save(flush: true)) {
-                def saveErrors = productInstance.errors.allErrors.collect {
-                    "${it.field} ${it.defaultMessage}"
-                }.join('; ')
-                return [status: 400, message: "Error updating product: $saveErrors"]
-            }
-
-            return [status: 200, product: productInstance]
         } catch (Exception e) {
-            return [status: 500, message: "Internal server error: ${e.message}"]
+            return [status: 500, message: "Internal server error while updating product. ${e.message}"]
         }
     }
 
-    Map deleteProduct(String productId, String owner) {
+    def deleteProduct(String productId, AppUser currentUser) {
         try {
-            // Find the existing product by productId
-            Product productInstance = Product.findByProductId(productId)
-            if (!productInstance) {
-                return [status: 404, message: "Product with id $productId not found."]
+            def product = Product.findByProductId(productId)
+            
+            if (!product) {
+                return [status: 404, message: "Product not found."]
             }
 
-            // Check ownership and authorization
-            if (!productInstance.owner.equals(owner)) {
+            if (!currentUser.getAuthorities().any { it.authority == 'ROLE_PRODUCT_ADMIN' } && product.owner != currentUser) {
                 return [status: 403, message: "You do not have permission to delete this product."]
             }
 
-            // Delete the product instance
-            productInstance.delete(flush: true)
-            return [status: 200, message: "Product deleted successfully."]
+            if (product.delete(flush: true)) {
+                return [status: 200, message: "Product deleted successfully."]
+            } else {
+                return [status: 400, message: "Failed to delete product. Errors: ${product.errors.allErrors.collect { it.defaultMessage }.join(', ')}"]
+            }
         } catch (Exception e) {
-            return [status: 500, message: "Internal server error: ${e.message}"]
+            return [status: 500, message: "Internal server error while deleting product. ${e.message}"]
         }
     }
 
-    Map listProducts(String owner) {
+    def listProducts(AppUser currentUser) {
         try {
-            // List products based on the owner
-            def products = Product.findAllByOwner(owner)
+            def isAdmin = currentUser.getAuthorities().any { it.authority == 'ROLE_PRODUCT_ADMIN' }
+            
+            def products
+            if (isAdmin) {
+                products = Product.list()
+            } else {
+                products = Product.findAllByOwner(currentUser)
+            }
+            
+            if (!products) {
+                return [status: 404, message: "No products found."]
+            }
             return [status: 200, products: products]
         } catch (Exception e) {
-            return [status: 500, message: "Internal server error: ${e.message}"]
+            return [status: 500, message: "Internal server error while listing products. ${e.message}"]
         }
     }
 }

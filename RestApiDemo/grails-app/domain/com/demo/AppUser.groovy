@@ -3,6 +3,7 @@ package com.demo
 import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
 import grails.compiler.GrailsCompileStatic
+import grails.gorm.transactions.Transactional
 
 @GrailsCompileStatic
 @EqualsAndHashCode(includes='username')
@@ -28,6 +29,6 @@ class AppUser implements Serializable {
     }
 
     static mapping = {
-	    password column: '`password`'
+        password column: '`password`'
     }
 }

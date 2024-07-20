@@ -1,7 +1,4 @@
-package restapidemo
-
-import com.demo.Product
-import com.demo.ProductService
+package com.demo
 import grails.rest.RestfulController
 
 class ProductController extends RestfulController<Product> {
@@ -14,12 +11,16 @@ class ProductController extends RestfulController<Product> {
         this.productService = productService
     }
 
-    // POST request to create a new product
     def create() {
         def productParams = request.JSON
-        def currentUser = getCurrentUser() // Fetch current user details
-        def result = productService.createProduct(productParams, currentUser)
+        def currentUser = getCurrentUser()
 
+        if (!currentUser) {
+            render(status: 401, text: "Unauthorized")
+            return
+        }
+
+        def result = productService.createProduct(productParams, currentUser)
         if (result.status == 201) {
             respond result.product, [status: result.status]
         } else {
@@ -27,7 +28,6 @@ class ProductController extends RestfulController<Product> {
         }
     }
 
-    // PUT request to update a product
     def update() {
         def productParams = request.JSON
         if (!productParams.productId) {
@@ -35,7 +35,12 @@ class ProductController extends RestfulController<Product> {
             return
         }
 
-        def currentUser = getCurrentUser() // Fetch current user details
+        def currentUser = getCurrentUser()
+        if (!currentUser) {
+            render(status: 401, text: "Unauthorized")
+            return
+        }
+
         def result = productService.updateProduct(productParams.productId, productParams, currentUser)
         if (result.status == 200) {
             respond result.product, [status: result.status]
@@ -44,7 +49,6 @@ class ProductController extends RestfulController<Product> {
         }
     }
 
-    // DELETE request to delete a product
     def delete() {
         def productParams = request.JSON
         if (!productParams.productId) {
@@ -52,14 +56,23 @@ class ProductController extends RestfulController<Product> {
             return
         }
 
-        def currentUser = getCurrentUser() // Fetch current user details
+        def currentUser = getCurrentUser()
+        if (!currentUser) {
+            render(status: 401, text: "Unauthorized")
+            return
+        }
+
         def result = productService.deleteProduct(productParams.productId, currentUser)
         render(status: result.status, text: result.message)
     }
 
-    // GET request to list products
     def list() {
-        def currentUser = getCurrentUser() // Fetch current user details
+        def currentUser = getCurrentUser()
+        if (!currentUser) {
+            render(status: 401, text: "Unauthorized")
+            return
+        }
+
         def result = productService.listProducts(currentUser)
         if (result.status == 200) {
             respond result.products, [status: result.status]
@@ -68,8 +81,35 @@ class ProductController extends RestfulController<Product> {
         }
     }
 
-    private getCurrentUser() {
-       
-        return "satish kumar"
+    def show() {
+        def productId = params.id
+        if (!productId) {
+            render(status: 400, text: "Product id must be provided.")
+            return
+        }
+
+        def currentUser = getCurrentUser()
+        if (!currentUser) {
+            render(status: 401, text: "Unauthorized")
+            return
+        }
+
+        def product = Product.findByProductIdAndOwner(productId, currentUser)
+        if (!product) {
+            render(status: 404, text: "Product not found or you do not have permission to view this product.")
+            return
+        }
+
+        respond product, [status: 200]
+    }
+
+    private AppUser getCurrentUser() {
+        String token = request.getHeader("Authorization")?.split(" ")?.last()
+        if (!token) {
+            return null
+        }
+
+        AuthenticationToken authToken = AuthenticationToken.findByTokenValue(token)
+        return authToken ? AppUser.findByUsername(authToken.username) : null
     }
 }
