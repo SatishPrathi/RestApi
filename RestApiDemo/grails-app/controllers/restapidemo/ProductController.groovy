@@ -90,25 +90,4 @@ def delete() {
         }
     }
 }
-    /*def show() {
-        def productId = params.id
-        if (!productId) {
-            render(status: 400, text: "Product id must be provided.")
-            return
-        }
-
-        def currentUser = commonsService.getCurrentUser(request.getHeader("Authorization"))
-        if (!currentUser) {
-            render(status: 401, text: "Unauthorized")
-            return
-        }
-
-        def product = Product.findByProductIdAndOwner(productId, currentUser)
-        if (!product) {
-            render(status: 404, text: "Product not found or you do not have permission to view this product.")
-            return
-        }*/
-
-        //respond product, [status: 200]
-   // }
-
+    
