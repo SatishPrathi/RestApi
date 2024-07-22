@@ -1,19 +1,22 @@
 package com.demo
+
 import grails.rest.RestfulController
 
 class ProductController extends RestfulController<Product> {
     static responseFormats = ['json', 'xml']
-    
-    ProductService productService
 
-    ProductController(ProductService productService) {
+    ProductService productService
+    CommonsService commonsService
+
+    ProductController(ProductService productService, CommonsService commonsService) {
         super(Product)
         this.productService = productService
+        this.commonsService = commonsService
     }
 
     def create() {
         def productParams = request.JSON
-        def currentUser = getCurrentUser()
+        def currentUser = commonsService.getCurrentUser(request.getHeader("Authorization"))
 
         if (!currentUser) {
             render(status: 401, text: "Unauthorized")
@@ -35,7 +38,7 @@ class ProductController extends RestfulController<Product> {
             return
         }
 
-        def currentUser = getCurrentUser()
+        def currentUser = commonsService.getCurrentUser(request.getHeader("Authorization"))
         if (!currentUser) {
             render(status: 401, text: "Unauthorized")
             return
@@ -49,25 +52,31 @@ class ProductController extends RestfulController<Product> {
         }
     }
 
-    def delete() {
-        def productParams = request.JSON
-        if (!productParams.productId) {
-            render(status: 400, text: "Product id must be provided.")
-            return
-        }
+def delete() {
+    def productParams = request.JSON
+    println "Received delete request with params: ${productParams}"
 
-        def currentUser = getCurrentUser()
-        if (!currentUser) {
-            render(status: 401, text: "Unauthorized")
-            return
-        }
-
-        def result = productService.deleteProduct(productParams.productId, currentUser)
-        render(status: result.status, text: result.message)
+    if (!productParams.productId) {
+        println "Product id not provided."
+        render(status: 400, text: "Product id must be provided.")
+        return
     }
 
+    def currentUser = commonsService.getCurrentUser(request.getHeader("Authorization"))
+    if (!currentUser) {
+        println "Unauthorized user."
+        render(status: 401, text: "Unauthorized")
+        return
+    }
+
+    def result = productService.deleteProduct(productParams.productId, currentUser)
+    println "Delete result: ${result}"
+    render(status: result.status, text: result.message)
+}
+
+
     def list() {
-        def currentUser = getCurrentUser()
+        def currentUser = commonsService.getCurrentUser(request.getHeader("Authorization"))
         if (!currentUser) {
             render(status: 401, text: "Unauthorized")
             return
@@ -80,15 +89,15 @@ class ProductController extends RestfulController<Product> {
             render(status: result.status, text: result.message)
         }
     }
-
-    def show() {
+}
+    /*def show() {
         def productId = params.id
         if (!productId) {
             render(status: 400, text: "Product id must be provided.")
             return
         }
 
-        def currentUser = getCurrentUser()
+        def currentUser = commonsService.getCurrentUser(request.getHeader("Authorization"))
         if (!currentUser) {
             render(status: 401, text: "Unauthorized")
             return
@@ -98,18 +107,8 @@ class ProductController extends RestfulController<Product> {
         if (!product) {
             render(status: 404, text: "Product not found or you do not have permission to view this product.")
             return
-        }
+        }*/
 
-        respond product, [status: 200]
-    }
+        //respond product, [status: 200]
+   // }
 
-    private AppUser getCurrentUser() {
-        String token = request.getHeader("Authorization")?.split(" ")?.last()
-        if (!token) {
-            return null
-        }
-
-        AuthenticationToken authToken = AuthenticationToken.findByTokenValue(token)
-        return authToken ? AppUser.findByUsername(authToken.username) : null
-    }
-}
