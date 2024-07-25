@@ -44,6 +44,7 @@ grails.plugin.springsecurity.interceptUrlMap = [
     [pattern: '/**/favicon.ico', access: ['permitAll']],
     [pattern: '/api/login',      access: ['permitAll']],
     [pattern: '/api/logout',     access: ['permitAll']],
+    [pattern: '/user/create', access: ['permitAll']],  // Allow user creation without authentication
     [pattern: '/employee/**',    access: ['permitAll']],
     [pattern: '/product/**',     access: ['permitAll']]
 ]

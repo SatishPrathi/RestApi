@@ -1,4 +1,4 @@
-package restapidemo
+package com.demo
 
 import grails.core.GrailsApplication
 import grails.plugins.*
