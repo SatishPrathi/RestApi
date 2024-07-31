@@ -53,11 +53,6 @@ class ProductController extends RestfulController<Product> {
             return
         }
 
-        if (!currentUser.getAuthorities().any { it.authority == 'ROLE_PRODUCT_USER' }) {
-            render(status: 403, text: "You do not have permission to update products.")
-            return
-        }
-
         def result = productService.updateProduct(productParams.productId, productParams, currentUser)
         if (result.status == 200) {
             respond result.product, [status: result.status]
@@ -77,11 +72,6 @@ class ProductController extends RestfulController<Product> {
         def currentUser = commonsService.getCurrentUser(request.getHeader("Authorization"))
         if (!currentUser) {
             render(status: 401, text: "Unauthorized")
-            return
-        }
-
-        if (!currentUser.getAuthorities().any { it.authority == 'ROLE_PRODUCT_USER' }) {
-            render(status: 403, text: "You do not have permission to delete products.")
             return
         }
 

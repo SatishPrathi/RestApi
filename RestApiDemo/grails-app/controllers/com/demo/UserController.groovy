@@ -2,24 +2,24 @@ package com.demo
 
 import grails.rest.RestfulController
 import grails.gorm.transactions.Transactional
-import com.demo.AppUser
-import com.demo.SecurityRole
 
 class UserController extends RestfulController<AppUser> {
     static responseFormats = ['json', 'xml']
+    UserService userService
 
-    UserController() {
+    UserController(UserService userService) {
         super(AppUser)
+        this.userService = userService
     }
 
     @Transactional
     def create() {
         def userParams = request.JSON
-        def user = new AppUser(userParams)
-        if (user.save(flush: true)) {
-            respond user, status: 201
+        def result = userService.createUser(userParams)
+        if (result.status == 201) {
+            respond result.user, status: 201
         } else {
-            respond user.errors, status: 400
+            render status: result.status, text: result.message
         }
     }
 }

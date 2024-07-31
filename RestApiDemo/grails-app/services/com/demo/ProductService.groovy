@@ -28,9 +28,12 @@ class ProductService {
                 return [status: 404, message: "Product not found."]
             }
 
-            if (product.owner != currentUser) {
+            def roles = currentUser.getAuthorities().collect { it.authority }
+            def isAdmin = roles.contains('ROLE_PRODUCT_ADMIN')
+
+            /*if (product.owner != currentUser && !isAdmin) {
                 return [status: 403, message: "You do not have permission to update this product."]
-            }
+            }*/
 
             product.properties = productParams
 
@@ -52,7 +55,10 @@ class ProductService {
                 return [status: 404, message: "Product not found."]
             }
 
-            if (product.owner != currentUser) {
+            def roles = currentUser.getAuthorities().collect { it.authority }
+            def isAdmin = roles.contains('ROLE_PRODUCT_ADMIN')
+
+            if (product.owner != currentUser && !isAdmin) {
                 return [status: 403, message: "You do not have permission to delete this product."]
             }
 
