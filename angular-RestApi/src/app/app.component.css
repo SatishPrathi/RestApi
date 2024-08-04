@@ -1,0 +1,12 @@
+/* app.component.css */
+ejs-menu {
+  margin-bottom: 20px;
+}
+
+ejs-menu .e-menu-item {
+  padding: 10px 20px;
+}
+
+ejs-menu .e-menu-item:hover {
+  background-color: #f0f0f0;
+}

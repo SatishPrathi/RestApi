@@ -1,10 +1,17 @@
-// src/app/app-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LandingPageComponent } from './landing-page/landing-page.component';
+import { LoginComponent } from './auth/login/login.component';
+import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboard.component';
+import { OwnerDashboardComponent } from './dashboard/owner-dashboard/owner-dashboard.component';
+import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
+import {AuthService } from './auth/AuthService';
 
 const routes: Routes = [
-  { path: '', component: LandingPageComponent }
+  { path: 'login', component: LoginComponent },
+  { path: 'user-dashboard', component: UserDashboardComponent, canActivate: [AuthService] },
+  { path: 'owner-dashboard', component: OwnerDashboardComponent, canActivate: [AuthService] },
+  { path: 'admin-dashboard', component: AdminDashboardComponent, canActivate: [AuthService] },
+  { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
 @NgModule({
