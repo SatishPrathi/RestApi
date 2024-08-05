@@ -1,51 +1,100 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from './auth/AuthService';
-import { MenuItemModel } from '@syncfusion/ej2-angular-navigations';
+import { Component, ViewChild } from '@angular/core';
+import { MenuComponent, MenuItemModel, MenuAnimationSettingsModel } from '@syncfusion/ej2-angular-navigations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-  public menuData: MenuItemModel[] = [];
-  public userRole: string = '';
+export class AppComponent {
+  @ViewChild(MenuComponent) menuObj: MenuComponent | undefined;
 
-  constructor(private authService: AuthService) {}
+  public animationSettings: MenuAnimationSettingsModel = {
+    effect: 'ZoomIn',
+    duration: 800
+  };
 
-  ngOnInit() {
-    this.authService.userRole$.subscribe(role => {
-      this.userRole = role;
-      this.setMenuBasedOnRole(role);
-    });
+  public menuItems: MenuItemModel[] = [
+    {
+      text: 'Products',
+      items: [
+        {
+          text: 'Product User',
+          items: [
+            { text: 'Create' },
+            { text: 'Update' },
+            { text: 'Delete' },
+            { text: 'List' }
+          ]
+        },
+        {
+          text: 'Product Owner',
+          items: [
+            { text: 'Create' },
+            { text: 'Update' },
+            { text: 'Delete' },
+            { text: 'List' }
+          ]
+        },
+        {
+          text: 'Product Admin',
+          items: [
+            { text: 'Create' },
+            { text: 'Update' },
+            { text: 'Delete' },
+            { text: 'List' }
+          ]
+        }
+      ]
+    },
+    {
+      text: 'Services',
+      items: [
+        {
+          text: 'Consulting',
+          items: [
+            { text: 'Service A' },
+            { text: 'Service B' }
+          ]
+        },
+        {
+          text: 'Support',
+          items: [
+            { text: 'Technical Support' },
+            { text: 'Customer Support' }
+          ]
+        }
+      ]
+    },
+    {
+      text: 'About Us',
+      items: [
+        {
+          text: 'Company',
+          items: [
+            { text: 'History' },
+            { text: 'Mission' },
+            { text: 'Vision' }
+          ]
+        },
+        {
+          text: 'Team',
+          items: [
+            { text: 'Leadership' },
+            { text: 'Staff' }
+          ]
+        }
+      ]
+    },
+    { text: 'Careers' },
+    { text: 'Sign In' }
+  ];
+
+  public beforeOpen(args: any): void {
+    // Additional handling if needed
   }
 
-  private setMenuBasedOnRole(role: string) {
-    switch(role) {
-      case 'ROLE_ADMIN':
-        this.menuData = [
-          { text: 'Dashboard', items: [{ text: 'Admin Dashboard', url: '/admin-dashboard' }] },
-          { text: 'Products', items: [{ text: 'Manage Products', url: '/owner-dashboard' }] },
-          // Add more admin menu items here
-        ];
-        break;
-      case 'ROLE_OWNER':
-        this.menuData = [
-          { text: 'Dashboard', items: [{ text: 'Owner Dashboard', url: '/owner-dashboard' }] },
-          { text: 'Products', items: [{ text: 'Manage My Products', url: '/owner-dashboard' }] },
-          // Add more owner menu items here
-        ];
-        break;
-      case 'ROLE_USER':
-        this.menuData = [
-          { text: 'Dashboard', items: [{ text: 'User Dashboard', url: '/user-dashboard' }] },
-          { text: 'Products', items: [{ text: 'View Products', url: '/user-dashboard' }] },
-          // Add more user menu items here
-        ];
-        break;
-      default:
-        this.menuData = [];
-        break;
-    }
+  public onClick(args: any): void {
+    // Handle submenu actions based on item clicked
   }
 }

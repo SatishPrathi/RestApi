@@ -1,12 +1,81 @@
-/* app.component.css */
-ejs-menu {
-  margin-bottom: 20px;
+/* Ensure the menu container has relative positioning */
+.e-menu {
+    position: relative;
+    background-color: #f3f3f3;
+    display: flex; /* Align items horizontally */
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
 }
 
-ejs-menu .e-menu-item {
-  padding: 10px 20px;
+/* Top-level menu items styling */
+.e-menu .e-menu-item {
+    position: relative;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-right: 20px;
+    list-style: none; /* Remove default list styling */
 }
 
-ejs-menu .e-menu-item:hover {
-  background-color: #f0f0f0;
+/* Arrow symbol for top-level menu items */
+.e-menu .e-menu-item::after {
+    content: "▼"; /* Unicode character for downward triangle symbol */
+    margin-left: 5px;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+/* Hover effect for top-level items */
+.e-menu .e-menu-item:hover {
+    background-color: #e0e0e0;
+}
+
+/* Submenu styling */
+.e-menu .e-submenu {
+    display: none; /* Hide submenus by default */
+    position: absolute;
+    top: 100%; /* Position below the top-level menu item */
+    left: 0; /* Align submenu to the left of the top-level menu item */
+    z-index: 1000;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-top: 0; /* Remove margin-top for better alignment */
+    border-radius: 4px;
+    min-width: 150px; /* Ensure submenu has a minimum width */
+}
+
+/* Show submenu on hover */
+.e-menu .e-menu-item:hover > .e-submenu {
+    display: block; /* Display submenu on hover */
+}
+
+/* Submenu items styling */
+.e-menu .e-submenu .e-menu-item {
+    padding: 8px 15px;
+    font-size: 14px;
+    color: #555;
+    white-space: nowrap; /* Prevent text wrapping */
+    position: relative;
+}
+
+/* Arrow symbol for submenu items */
+.e-menu .e-submenu .e-menu-item::after {
+    content: "▶"; /* Unicode character for right-pointing triangle symbol */
+    margin-left: 5px;
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+/* Hover effect for submenu items */
+.e-menu .e-submenu .e-menu-item:hover {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Additional styling for selected item on click */
+.e-menu .e-menu-item:active, .e-menu .e-submenu .e-menu-item:active {
+    background-color: #d0d0d0;
+    color: #222;
 }

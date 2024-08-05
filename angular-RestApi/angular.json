@@ -27,7 +27,9 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/@syncfusion/ej2-angular-navigations/styles/material.css",
               "src/styles.css"
+            
             ],
             "scripts": []
           },
@@ -94,11 +96,7 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@syncfusion/ej2-base/styles/material.css",
-  "node_modules/@syncfusion/ej2-buttons/styles/material.css",
-  "node_modules/@syncfusion/ej2-navigations/styles/material.css",
-  "src/styles.css"
-              
+              "src/styles.css"
             ],
             "scripts": []
           }
