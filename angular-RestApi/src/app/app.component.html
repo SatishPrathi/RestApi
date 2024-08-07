@@ -1,8 +1,12 @@
-<ejs-menu
-  #menuContainer
-  [items]="menuItems"
-  [animationSettings]="animationSettings"
-  orientation="Horizontal"
-  (beforeOpen)="beforeOpen($event)"
-  (select)="onClick($event)">
-</ejs-menu>
+<div *ngIf="isLoggedIn()">
+    <ejs-menu
+      #menuContainer
+      [items]="menuItems"
+      [animationSettings]="animationSettings"
+      orientation="Horizontal"
+      (select)="onClick($event)">
+    </ejs-menu>
+  </div>
+  
+  <router-outlet></router-outlet>
+  

@@ -1,13 +1,15 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MenuComponent, MenuItemModel, MenuAnimationSettingsModel } from '@syncfusion/ej2-angular-navigations';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  @ViewChild(MenuComponent) menuObj: MenuComponent | undefined;
+export class AppComponent implements OnInit {
+  @ViewChild('menuContainer') menuObj: MenuComponent | undefined;
 
   public animationSettings: MenuAnimationSettingsModel = {
     effect: 'ZoomIn',
@@ -48,22 +50,12 @@ export class AppComponent {
       ]
     },
     {
-      text: 'Services',
+      text: 'Employees',
       items: [
-        {
-          text: 'Consulting',
-          items: [
-            { text: 'Service A' },
-            { text: 'Service B' }
-          ]
-        },
-        {
-          text: 'Support',
-          items: [
-            { text: 'Technical Support' },
-            { text: 'Customer Support' }
-          ]
-        }
+        { text: 'Create' },
+        { text: 'Update' },
+        { text: 'Delete' },
+        { text: 'List' }
       ]
     },
     {
@@ -86,15 +78,25 @@ export class AppComponent {
         }
       ]
     },
-    { text: 'Careers' },
-    { text: 'Sign In' }
+    { text: 'Logoff' }
   ];
 
-  public beforeOpen(args: any): void {
-    // Additional handling if needed
+  constructor(private authService: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login']);
+    }
   }
 
   public onClick(args: any): void {
-    // Handle submenu actions based on item clicked
+    if (args.item.text === 'Logoff') {
+      this.authService.logout();
+      this.router.navigate(['/login']);
+    }
+  }
+
+  public isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 }
