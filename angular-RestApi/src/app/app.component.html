@@ -1,4 +1,5 @@
 <div *ngIf="isLoggedIn()">
+  <div class="menu-container">
     <ejs-menu
       #menuContainer
       [items]="menuItems"
@@ -7,6 +8,6 @@
       (select)="onClick($event)">
     </ejs-menu>
   </div>
-  
-  <router-outlet></router-outlet>
-  
+</div>
+
+<router-outlet></router-outlet>

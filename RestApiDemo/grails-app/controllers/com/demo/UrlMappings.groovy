@@ -8,6 +8,12 @@ class UrlMappings {
         "/product/update"(controller: "product", action: "update", method: "PUT")
         "/product/delete"(controller: "product", action: "delete", method: "DELETE")
         "/product/list"(controller: "product", action: "list", method: "GET")
+         "/employee/create"(controller: 'employee', action: 'create', method: 'POST')
+        "/employee/update"(controller: 'employee', action: 'update', method: 'PUT')
+        "/employee/delete"(controller: 'employee', action: 'delete', method: 'DELETE')
+        "/employee/list"(controller: "employee", action: "list", method: "GET")
+
+
 
         // Other mappings
         "/"(view: "/index")

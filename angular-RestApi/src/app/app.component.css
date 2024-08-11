@@ -1,10 +1,30 @@
-/* Ensure the menu container has relative positioning */
-.e-menu {
-    position: relative;
-    background-color: #f3f3f3;
-    display: flex; /* Align items horizontally */
+/* Ensure the body takes up the full height of the viewport */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center; /* Center the menu-container horizontally */
+    align-items: center; /* Center the menu-container vertically */
+    background-color: #f0f0f0; /* Optional: Set a background color for contrast */
+}
+
+/* Ensure the menu container has relative positioning and spacing */
+.menu-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center content horizontally within the container */
     padding: 10px;
+    background-color: #f3f3f3;
+    border-radius: 8px; /* Optional: Rounded corners for aesthetics */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add shadow for better visibility */
+    /* Add margins to ensure the container does not touch the edges of the viewport */
+    margin: 0 20px; /* Adjust as needed to control spacing from edges */
+}
+
+/* Styling for the menu */
+.e-menu {
+    background-color: #f3f3f3;
     border-bottom: 1px solid #ccc;
+    display: flex; /* Align items horizontally */
 }
 
 /* Top-level menu items styling */
