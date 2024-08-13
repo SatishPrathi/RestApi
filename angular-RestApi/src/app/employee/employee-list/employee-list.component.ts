@@ -24,9 +24,13 @@ export class EmployeeListComponent implements OnInit {
   }
 
   deleteEmployee(id: number): void {
-    this.employeeService.deleteEmployee(id).subscribe(
-      () => this.loadEmployees(),
-      (error) => console.error(error)
-    );
+    if (id !== undefined) {
+      this.employeeService.deleteEmployee(id).subscribe(
+        () => this.loadEmployees(),
+        (error) => console.error(error)
+      );
+    } else {
+      console.error('Employee ID is undefined');
+    }
   }
 }

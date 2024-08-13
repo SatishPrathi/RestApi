@@ -23,10 +23,14 @@ export class ProductListComponent implements OnInit {
     );
   }
 
-  deleteProduct(id: number): void {
-    this.productService.deleteProduct(id).subscribe(
-      () => this.loadProducts(),
-      (error) => console.error(error)
-    );
+  deleteProduct(id: number | undefined): void {  // Handle undefined id
+    if (id !== undefined) {
+      this.productService.deleteProduct(id).subscribe(
+        () => this.loadProducts(),
+        (error) => console.error(error)
+      );
+    } else {
+      console.error('Product ID is undefined');
+    }
   }
 }
