@@ -1,1 +1,27 @@
-<p>employee-list works!</p>
+<div>
+    <h2>Employee List</h2>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Department</th>
+        <th>Actions</th>
+      </tr>
+      <tr *ngFor="let employee of employees">
+        <td>{{employee.empId}}</td>
+        <td>{{employee.empFname}}</td>
+        <td>{{employee.empLname}}</td>
+        <td>{{employee.age}}</td>
+        <td>{{employee.address}}</td>
+        <td>{{employee.department}}</td>
+        <td>
+          <a [routerLink]="['/employees/update', employee.id]">Edit</a>
+          <button (click)="deleteEmployee(employee.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  

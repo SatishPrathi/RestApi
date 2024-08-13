@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { RestService } from '../../rest/rest.service';
+import { EmployeeService } from '../employee.service';
+import { Employee } from '../employee.model';
 
 @Component({
   selector: 'app-employee-create',
@@ -8,14 +9,21 @@ import { RestService } from '../../rest/rest.service';
   styleUrls: ['./employee-create.component.css']
 })
 export class EmployeeCreateComponent {
-  employee: any = {};
+  employee: Employee = {
+    empId: '',
+    empFname: '',
+    empLname: '',
+    age: 0,
+    address: '',
+    department: ''
+  };
 
-  constructor(private restService: RestService, private router: Router) {}
+  constructor(private employeeService: EmployeeService, private router: Router) { }
 
   createEmployee(): void {
-    this.restService.genericRestService(JSON.stringify(this.employee), 'api/employees').subscribe(
-      () => this.router.navigate(['/employee-list']),
-      error => console.error('Error creating employee', error)
+    this.employeeService.createEmployee(this.employee).subscribe(
+      () => this.router.navigate(['/employees']),
+      (error) => console.error(error)
     );
   }
 }

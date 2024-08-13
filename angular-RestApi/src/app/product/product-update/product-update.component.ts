@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../rest/rest.service';
+import { ProductService } from '../product.service';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'app-product-update',
@@ -8,27 +9,35 @@ import { RestService } from '../../rest/rest.service';
   styleUrls: ['./product-update.component.css']
 })
 export class ProductUpdateComponent implements OnInit {
-  product: any = {};
+  product: Product = {
+    productId: '',
+    name: '',
+    price: 0,
+    discount: 0,
+    location: '',
+    category: '',
+    owner: ''
+  };
+  id!: number;
 
-  constructor(
-    private restService: RestService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private productService: ProductService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.restService.genericRestService('', `api/products/${id}`).subscribe(
-      data => this.product = data,
-      error => console.error('Error fetching product', error)
+    this.id = +this.route.snapshot.paramMap.get('id')!;
+    this.loadProduct();
+  }
+
+  loadProduct(): void {
+    this.productService.getProduct(this.id).subscribe(
+      (data: Product) => this.product = data,
+      (error) => console.error(error)
     );
   }
 
   updateProduct(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.restService.genericRestService(JSON.stringify(this.product), `api/products/${id}`).subscribe(
-      () => this.router.navigate(['/product-list']),
-      error => console.error('Error updating product', error)
+    this.productService.updateProduct(this.id, this.product).subscribe(
+      () => this.router.navigate(['/products']),
+      (error) => console.error(error)
     );
   }
 }

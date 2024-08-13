@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '../../rest/rest.service';
+import { ProductService } from '../product.service';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'app-product-list',
@@ -7,18 +8,25 @@ import { RestService } from '../../rest/rest.service';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  products: any[] = [];
+  products: Product[] = [];
 
-  constructor(private restService: RestService) {}
+  constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
     this.loadProducts();
   }
 
   loadProducts(): void {
-    this.restService.genericRestService('', 'api/products').subscribe(
-      data => this.products = data,
-      error => console.error('Error fetching products', error)
+    this.productService.getProducts().subscribe(
+      (data: Product[]) => this.products = data,
+      (error) => console.error(error)
+    );
+  }
+
+  deleteProduct(id: number): void {
+    this.productService.deleteProduct(id).subscribe(
+      () => this.loadProducts(),
+      (error) => console.error(error)
     );
   }
 }

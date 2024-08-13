@@ -1,49 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestService {
-  private static readonly connectionUrl = 'http://localhost:8080/';
+  private baseUrl = 'http://localhost:8080/api';  // Base URL for your backend API
 
   constructor(private http: HttpClient) {}
 
-  private getHttpOptions(): { headers: HttpHeaders } {
-    // Dynamically set the Authorization header
-    const token = localStorage.getItem('token') || '';
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      })
-    };
-  }
-
-  genericRestService(body: any, urlendpoint: string): Observable<any> {
-    return this.http.post(RestService.connectionUrl + urlendpoint, body, this.getHttpOptions()).pipe(
-      map(this.extractData),
-      catchError(this.handleError)
-    );
-  }
-
-  private extractData(res: any): any {
-    // Ensure you return only the data part
-    return res || {};
-  }
-
-  private handleError(error: any): Observable<never> {
-    let errorMessage = 'An unknown error occurred!';
-    if (error.error instanceof ErrorEvent) {
-      // Client-side error
-      errorMessage = `Error: ${error.error.message}`;
-    } else {
-      // Server-side error
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+  genericRestService(body: any, endpoint: string, method: string = 'POST'): Observable<any> {
+    const url = `${this.baseUrl}/${endpoint}`;
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    
+    switch (method.toUpperCase()) {
+      case 'GET':
+        return this.http.get(url);
+      case 'POST':
+        return this.http.post(url, body, { headers });
+      case 'PUT':
+        return this.http.put(url, body, { headers });
+      case 'DELETE':
+        return this.http.delete(url);
+      default:
+        throw new Error('Invalid HTTP method');
     }
-    console.error(errorMessage);
-    return throwError(errorMessage);
   }
 }

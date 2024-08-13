@@ -1,6 +1,6 @@
-// employee-list.component.ts
 import { Component, OnInit } from '@angular/core';
-import { RestService } from '../../rest/rest.service';
+import { EmployeeService } from '../employee.service';
+import { Employee } from '../employee.model';
 
 @Component({
   selector: 'app-employee-list',
@@ -8,18 +8,25 @@ import { RestService } from '../../rest/rest.service';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  employees: any[] = [];
+  employees: Employee[] = [];
 
-  constructor(private restService: RestService) {}
+  constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
     this.loadEmployees();
   }
 
   loadEmployees(): void {
-    this.restService.genericRestService('', 'api/employees').subscribe(
-      data => this.employees = data,
-      error => console.error('Error fetching employees', error)
+    this.employeeService.getEmployees().subscribe(
+      (data: Employee[]) => this.employees = data,
+      (error) => console.error(error)
+    );
+  }
+
+  deleteEmployee(id: number): void {
+    this.employeeService.deleteEmployee(id).subscribe(
+      () => this.loadEmployees(),
+      (error) => console.error(error)
     );
   }
 }

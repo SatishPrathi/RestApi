@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { RestService } from '../../rest/rest.service';
+import { ProductService } from '../product.service';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'app-product-create',
@@ -8,14 +9,22 @@ import { RestService } from '../../rest/rest.service';
   styleUrls: ['./product-create.component.css']
 })
 export class ProductCreateComponent {
-  product: any = {};
+  product: Product = {
+    productId: '',
+    name: '',
+    price: 0,
+    discount: 0,
+    location: '',
+    category: '',
+    owner: ''
+  };
 
-  constructor(private restService: RestService, private router: Router) {}
+  constructor(private productService: ProductService, private router: Router) { }
 
   createProduct(): void {
-    this.restService.genericRestService(JSON.stringify(this.product), 'api/products').subscribe(
-      () => this.router.navigate(['/product-list']),
-      error => console.error('Error creating product', error)
+    this.productService.createProduct(this.product).subscribe(
+      () => this.router.navigate(['/products']),
+      (error) => console.error(error)
     );
   }
 }
