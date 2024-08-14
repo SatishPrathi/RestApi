@@ -2,21 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductUpdateComponent } from './product-update/product-update.component';
-import { ProductService } from './product.service';
+import { ProductDeleteComponent } from './product-delete/product-delete.component';
+import { ProductRoutingModule } from './product-routing.module'; // Import the ProductRoutingModule
 
 @NgModule({
   declarations: [
-    ProductCreateComponent,
     ProductListComponent,
-    ProductUpdateComponent
+    ProductCreateComponent,
+    ProductUpdateComponent,
+    ProductDeleteComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
-  ],
-  providers: [ProductService]
+    FormsModule,
+    ProductRoutingModule // Enable the routing module
+  ]
 })
 export class ProductModule { }

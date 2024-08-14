@@ -1,34 +1,35 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';  // Import RouterModule
+import { FormsModule } from '@angular/forms';
+import { MenuModule } from '@syncfusion/ej2-angular-navigations'; // Import the Syncfusion Menu module
+import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './auth.guard'; // Import AuthGuard if necessary
+import { WelcomeComponent } from './welcome/welcome.component';
+
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MenuModule } from '@syncfusion/ej2-angular-navigations';
-
-// Employee Modules
 import { EmployeeModule } from './employee/employee.module';
-
-// Product Modules
 import { ProductModule } from './product/product.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    WelcomeComponent
+    // Any other components that belong directly to the AppModule
   ],
   imports: [
     BrowserModule,
-    FormsModule,
     HttpClientModule,
+    FormsModule,
     AppRoutingModule,
-    RouterModule,  // Add RouterModule here
     EmployeeModule,
     ProductModule,
     MenuModule
   ],
-  providers: [],
+  providers: [ AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

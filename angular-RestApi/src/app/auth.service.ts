@@ -57,9 +57,11 @@ export class AuthService {
 
   private redirectUser(role: string): void {
     if (role === "ROLE_EMPLOYEE") {
-      this.router.navigate(['/employee-list']);
+      this.router.navigate(['/employees']);
     } else if (role === "ROLE_USER") {
       this.router.navigate(['/welcome']);
+    } else {
+      this.router.navigate(['/login']); // Default case
     }
   }
 }

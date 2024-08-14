@@ -16,7 +16,7 @@ export class LoginComponent {
   login(): void {
     this.authService.login(this.username, this.password).subscribe({
       next: () => {
-        // Redirection handled in AuthService
+        // Redirection is handled in AuthService
       },
       error: () => {
         this.errorMessage = 'Invalid username or password';

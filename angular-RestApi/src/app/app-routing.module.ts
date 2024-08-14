@@ -1,20 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
-import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
-import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
-import { ProductListComponent } from './product/product-list/product-list.component';
-import { ProductCreateComponent } from './product/product-create/product-create.component';
-import { ProductUpdateComponent } from './product/product-update/product-update.component';
+import { LoginComponent } from './login/login.component';
+import { WelcomeComponent } from './welcome/welcome.component'; // Ensure this component exists
+import { AuthGuard } from './auth.guard'; // Ensure this guard exists
 
 const routes: Routes = [
-  { path: 'employees/list', component: EmployeeListComponent },
-  { path: 'employees/create', component: EmployeeCreateComponent },
-  { path: 'employees/update/:id', component: EmployeeUpdateComponent },
-  { path: 'products/list', component: ProductListComponent },
-  { path: 'products/create', component: ProductCreateComponent },
-  { path: 'products/update/:id', component: ProductUpdateComponent },
-  { path: '', redirectTo: '/employees/list', pathMatch: 'full' }, // default route
+  { path: 'login', component: LoginComponent },
+  { path: 'welcome', component: WelcomeComponent, canActivate: [AuthGuard] },
+  { path: 'employees', loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule), canActivate: [AuthGuard] },
+  { path: 'products', loadChildren: () => import('./product/product.module').then(m => m.ProductModule), canActivate: [AuthGuard] },
+  { path: '', redirectTo: '/welcome', pathMatch: 'full' },
+  { path: '**', redirectTo: '/welcome' } // Redirect to a default route if needed
 ];
 
 @NgModule({

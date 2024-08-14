@@ -2,21 +2,21 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { EmployeeCreateComponent } from './employee-create/employee-create.component';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
+import { EmployeeCreateComponent } from './employee-create/employee-create.component';
 import { EmployeeUpdateComponent } from './employee-update/employee-update.component';
-import { EmployeeService } from './employee.service';
+import { EmployeeRoutingModule } from './employee-routing.module'; // Import the EmployeeRoutingModule
 
 @NgModule({
   declarations: [
-    EmployeeCreateComponent,
     EmployeeListComponent,
+    EmployeeCreateComponent,
     EmployeeUpdateComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
-  ],
-  providers: [EmployeeService]
+    FormsModule,
+    EmployeeRoutingModule // Enable the routing module
+  ]
 })
 export class EmployeeModule { }
