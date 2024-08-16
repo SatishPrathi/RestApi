@@ -6,7 +6,8 @@ import { MenuModule } from '@syncfusion/ej2-angular-navigations'; // Import the 
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './auth.guard'; // Import AuthGuard if necessary
 import { WelcomeComponent } from './welcome/welcome.component';
-
+import {RestService}from './rest/rest.service';
+import {AuthService}from './auth.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -29,7 +30,7 @@ import { ProductModule } from './product/product.module';
     ProductModule,
     MenuModule
   ],
-  providers: [ AuthGuard],
+  providers: [ AuthGuard,AuthService,RestService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
