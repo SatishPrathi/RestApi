@@ -88,15 +88,16 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
-
   public onClick(args: any): void {
     if (args.item.text === 'Logoff') {
       this.authService.logout();
       this.router.navigate(['/login']);
     } else if (args.item.url) {
+      // Navigate to the selected URL
       this.router.navigate([args.item.url]);
     }
   }
+  
 
   public isLoggedIn(): boolean {
     return this.authService.isLoggedIn();

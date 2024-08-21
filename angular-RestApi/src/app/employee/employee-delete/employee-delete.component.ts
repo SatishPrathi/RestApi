@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RestService } from '../../rest/rest.service';
+import { EmployeeService } from '../employee.service';
 
 @Component({
   selector: 'app-employee-delete',
@@ -11,14 +11,14 @@ export class EmployeeDeleteComponent implements OnInit {
   employee: any = {};
 
   constructor(
-    private restService: RestService,
+    private employeeService: EmployeeService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.restService.genericRestService('', `api/employees/${id}`).subscribe(
+    this.employeeService.getEmployee(+id!).subscribe(
       data => this.employee = data,
       error => console.error('Error fetching employee', error)
     );
@@ -26,8 +26,8 @@ export class EmployeeDeleteComponent implements OnInit {
 
   deleteEmployee(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.restService.genericRestService('', `api/employees/${id}`).subscribe(
-      () => this.router.navigate(['/employee-list']),
+    this.employeeService.deleteEmployee(+id!).subscribe(
+      () => this.router.navigate(['/employees']),
       error => console.error('Error deleting employee', error)
     );
   }

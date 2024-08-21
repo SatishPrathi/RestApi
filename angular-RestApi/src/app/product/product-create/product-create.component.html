@@ -1,28 +1,21 @@
-<div>
-    <h2>Create Product</h2>
-    <form (ngSubmit)="createProduct()">
-      <label for="productId">Product ID:</label>
-      <input id="productId" [(ngModel)]="product.productId" name="productId" required>
-  
-      <label for="name">Name:</label>
-      <input id="name" [(ngModel)]="product.name" name="name" required>
-  
-      <label for="price">Price:</label>
-      <input id="price" type="number" [(ngModel)]="product.price" name="price" required>
-  
-      <label for="discount">Discount:</label>
-      <input id="discount" type="number" [(ngModel)]="product.discount" name="discount" required>
-  
-      <label for="location">Location:</label>
-      <input id="location" [(ngModel)]="product.location" name="location" required>
-  
-      <label for="category">Category:</label>
-      <input id="category" [(ngModel)]="product.category" name="category" required>
-  
-      <label for="owner">Owner:</label>
-      <input id="owner" [(ngModel)]="product.owner" name="owner" required>
-  
-      <button type="submit">Create</button>
-    </form>
-  </div>
-  
+<form (ngSubmit)="createProduct()">
+  <label for="name">Name:</label>
+  <input id="name" [(ngModel)]="product.name" name="name" required />
+
+  <label for="price">Price:</label>
+  <input id="price" type="number" [(ngModel)]="product.price" name="price" required />
+
+  <label for="discount">Discount:</label>
+  <input id="discount" type="number" [(ngModel)]="product.discount" name="discount" />
+
+  <label for="location">Location:</label>
+  <input id="location" [(ngModel)]="product.location" name="location" />
+
+  <label for="category">Category:</label>
+  <input id="category" [(ngModel)]="product.category" name="category" />
+
+  <label for="owner">Owner:</label>
+  <input id="owner" [(ngModel)]="product.owner" name="owner" />
+
+  <button type="submit">Create Product</button>
+</form>

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeCreateComponent } from './employee-create/employee-create.component';
 import { EmployeeUpdateComponent } from './employee-update/employee-update.component';
-import { EmployeeRoutingModule } from './employee-routing.module'; // Import the EmployeeRoutingModule
+import { EmployeeRoutingModule } from './employee-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { EmployeeRoutingModule } from './employee-routing.module'; // Import the
   imports: [
     CommonModule,
     FormsModule,
-    EmployeeRoutingModule // Enable the routing module
+    EmployeeRoutingModule
   ]
 })
 export class EmployeeModule { }
