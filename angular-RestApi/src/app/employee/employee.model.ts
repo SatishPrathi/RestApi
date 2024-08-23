@@ -1,9 +1,8 @@
 export interface Employee {
-  id?: number;
-  empId?: string;
+  empId: number; // Ensure this is number if that's the expected type
   empFname: string;
   empLname: string;
   age: number;
-  address: string;
-  department: string;
+  address?: string;
+  department?: string;
 }

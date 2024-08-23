@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { EmployeeService } from '../employee.service';
 import { Employee } from '../employee.model';
 
@@ -8,9 +7,9 @@ import { Employee } from '../employee.model';
   templateUrl: './employee-create.component.html',
   styleUrls: ['./employee-create.component.css']
 })
-export class EmployeeCreateComponent {
+export class EmployeeCreateComponent implements OnInit {
   employee: Employee = {
-    empId: '',
+    empId: 0, // Initialize as a number
     empFname: '',
     empLname: '',
     age: 0,
@@ -18,12 +17,20 @@ export class EmployeeCreateComponent {
     department: ''
   };
 
-  constructor(private employeeService: EmployeeService, private router: Router) { }
+  constructor(private employeeService: EmployeeService) { }
+
+  ngOnInit(): void {
+    // Initialization logic
+  }
 
   createEmployee(): void {
     this.employeeService.createEmployee(this.employee).subscribe(
-      () => this.router.navigate(['/employees']),
-      (error) => console.error(error)
+      () => {
+        // Handle successful creation
+      },
+      error => {
+        console.error('Error creating employee', error);
+      }
     );
   }
 }

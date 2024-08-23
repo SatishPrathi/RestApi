@@ -12,14 +12,14 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthService } from './auth.service';
 import { RestService } from './rest/rest.service';
 import { AuthGuard } from './auth.guard';
-import { Page404Component } from './page404/page404.component';
+//import { Page404Component } from './page404/page404.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     WelcomeComponent,
-    Page404Component
+   // Page404Component
   ],
   imports: [
     BrowserModule,

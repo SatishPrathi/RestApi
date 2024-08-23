@@ -1,5 +1,4 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { MenuComponent, MenuItemModel, MenuAnimationSettingsModel } from '@syncfusion/ej2-angular-navigations';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 
@@ -9,20 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  @ViewChild('menuContainer') menuObj: MenuComponent | undefined;
-
-  public animationSettings: MenuAnimationSettingsModel = {
-    effect: 'ZoomIn',
-    duration: 800
-  };
-
-  public menuItems: MenuItemModel[] = [
+  // Menu items array
+  public menuItems: any[] = [
     {
       text: 'Products',
-      items: [
+      subItems: [
         {
           text: 'Product User',
-          items: [
+          subItems: [
             { text: 'Create', url: '/products/create' },
             { text: 'Update', url: '/products/update' },
             { text: 'Delete', url: '/products/delete' },
@@ -31,7 +24,7 @@ export class AppComponent implements OnInit {
         },
         {
           text: 'Product Owner',
-          items: [
+          subItems: [
             { text: 'Create', url: '/products/create' },
             { text: 'Update', url: '/products/update' },
             { text: 'Delete', url: '/products/delete' },
@@ -40,7 +33,7 @@ export class AppComponent implements OnInit {
         },
         {
           text: 'Product Admin',
-          items: [
+          subItems: [
             { text: 'Create', url: '/products/create' },
             { text: 'Update', url: '/products/update' },
             { text: 'Delete', url: '/products/delete' },
@@ -50,8 +43,8 @@ export class AppComponent implements OnInit {
       ]
     },
     {
-      text: 'Employees',
-      items: [
+      text: 'Employee',
+      subItems: [
         { text: 'Create', url: '/employees/create' },
         { text: 'Update', url: '/employees/update' },
         { text: 'Delete', url: '/employees/delete' },
@@ -60,10 +53,10 @@ export class AppComponent implements OnInit {
     },
     {
       text: 'About Us',
-      items: [
+      subItems: [
         {
           text: 'Company',
-          items: [
+          subItems: [
             { text: 'History', url: '/about/history' },
             { text: 'Mission', url: '/about/mission' },
             { text: 'Vision', url: '/about/vision' }
@@ -71,7 +64,7 @@ export class AppComponent implements OnInit {
         },
         {
           text: 'Team',
-          items: [
+          subItems: [
             { text: 'Leadership', url: '/about/leadership' },
             { text: 'Staff', url: '/about/staff' }
           ]
@@ -88,16 +81,15 @@ export class AppComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
-  public onClick(args: any): void {
-    if (args.item.text === 'Logoff') {
+
+  public onClick(item: any): void {
+    if (item.text === 'Logoff') {
       this.authService.logout();
       this.router.navigate(['/login']);
-    } else if (args.item.url) {
-      // Navigate to the selected URL
-      this.router.navigate([args.item.url]);
+    } else if (item.url) {
+      this.router.navigate([item.url]);
     }
   }
-  
 
   public isLoggedIn(): boolean {
     return this.authService.isLoggedIn();

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
 import { Employee } from '../employee.model';
 
@@ -10,7 +11,7 @@ import { Employee } from '../employee.model';
 export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService, private router: Router) { }
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -18,19 +19,29 @@ export class EmployeeListComponent implements OnInit {
 
   loadEmployees(): void {
     this.employeeService.getEmployees().subscribe(
-      (data: Employee[]) => this.employees = data,
-      (error) => console.error(error)
+      (data: Employee[]) => {
+        this.employees = data;
+      },
+      error => {
+        console.error('Error loading employees', error);
+      }
     );
   }
 
-  deleteEmployee(id: number): void {
-    if (id !== undefined) {
-      this.employeeService.deleteEmployee(id).subscribe(
-        () => this.loadEmployees(),
-        (error) => console.error(error)
+  deleteEmployee(empId: number): void {
+    if (confirm('Are you sure you want to delete this employee?')) {
+      this.employeeService.deleteEmployee(empId).subscribe(
+        () => {
+          this.employees = this.employees.filter(employee => employee.empId !== empId);
+        },
+        error => {
+          console.error('Error deleting employee', error);
+        }
       );
-    } else {
-      console.error('Employee ID is undefined');
     }
+  }
+
+  updateEmployee(empId: number): void {
+    this.router.navigate(['/employee/update', empId]);
   }
 }

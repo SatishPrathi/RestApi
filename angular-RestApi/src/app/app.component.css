@@ -1,101 +1,78 @@
-/* Ensure the body takes up the full height of the viewport */
-body {
-    margin: 0;
-    height: 100vh;
+/* Container for the navbar and content */
+.container {
     display: flex;
-    justify-content: center; /* Center the menu-container horizontally */
-    align-items: center; /* Center the menu-container vertically */
-    background-color: #f0f0f0; /* Optional: Set a background color for contrast */
-}
-
-/* Ensure the menu container has relative positioning and spacing */
-.menu-container {
-    display: flex; /* Use flexbox for alignment */
-    justify-content: center; /* Center content horizontally within the container */
+    flex-direction: column;
+    height: 100vh; /* Full height */
+  }
+  
+  /* Navbar styles */
+  .navbar {
+    background-color: #333;
     padding: 10px;
-    background-color: #f3f3f3;
-    border-radius: 8px; /* Optional: Rounded corners for aesthetics */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: Add shadow for better visibility */
-    /* Add margins to ensure the container does not touch the edges of the viewport */
-    margin: 0 20px; /* Adjust as needed to control spacing from edges */
-}
-
-/* Styling for the menu */
-.e-menu {
-    background-color: #f3f3f3;
-    border-bottom: 1px solid #ccc;
-    display: flex; /* Align items horizontally */
-}
-
-/* Top-level menu items styling */
-.e-menu .e-menu-item {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .nav-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+  
+  .nav-item {
     position: relative;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-right: 20px;
-    list-style: none; /* Remove default list styling */
-}
-
-/* Arrow symbol for top-level menu items */
-.e-menu .e-menu-item::after {
-    content: "▼"; /* Unicode character for downward triangle symbol */
-    margin-left: 5px;
-    font-size: 12px;
-    vertical-align: middle;
-}
-
-/* Hover effect for top-level items */
-.e-menu .e-menu-item:hover {
-    background-color: #e0e0e0;
-}
-
-/* Submenu styling */
-.e-menu .e-submenu {
-    display: none; /* Hide submenus by default */
+  }
+  
+  .nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    font-weight: bold;
+  }
+  
+  .nav-link:hover {
+    background-color: #575757;
+  }
+  
+  /* Dropdown menu styles */
+  .submenu {
+    display: none;
     position: absolute;
-    top: 100%; /* Position below the top-level menu item */
-    left: 0; /* Align submenu to the left of the top-level menu item */
-    z-index: 1000; /* Ensure submenu is above other content */
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    margin: 0; /* Remove margin for better alignment */
-    border-radius: 4px;
-    min-width: 150px; /* Ensure submenu has a minimum width */
-    white-space: nowrap; /* Prevent text wrapping */
-}
-
-/* Show submenu on hover */
-.e-menu .e-menu-item:hover .e-submenu {
-    display: block; /* Display submenu on hover */
-}
-
-/* Submenu items styling */
-.e-menu .e-submenu .e-menu-item {
-    padding: 8px 15px;
-    font-size: 14px;
-    color: #555;
+    top: 100%;
+    left: 0;
+    background-color: #444;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .nav-item:hover .submenu {
+    display: block;
+  }
+  
+  .submenu-item {
     position: relative;
-}
-
-/* Arrow symbol for submenu items */
-.e-menu .e-submenu .e-menu-item::after {
-    content: "▶"; /* Unicode character for right-pointing triangle symbol */
-    margin-left: 5px;
-    font-size: 12px;
-    vertical-align: middle;
-}
-
-/* Hover effect for submenu items */
-.e-menu .e-submenu .e-menu-item:hover {
-    background-color: #f0f0f0;
-    color: #333;
-}
-
-/* Additional styling for selected item on click */
-.e-menu .e-menu-item:active, .e-menu .e-submenu .e-menu-item:active {
-    background-color: #d0d0d0;
-    color: #222;
-}
+  }
+  
+  .submenu-link {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+  }
+  
+  .submenu-link:hover {
+    background-color: #575757;
+  }
+  
+  /* Content area styles */
+  .content {
+    flex: 1;
+    padding: 20px;
+    background-color: #f4f4f4;
+    overflow-y: auto; /* Scroll if content overflows */
+  }
+  

@@ -1,13 +1,27 @@
-<div *ngIf="isLoggedIn()">
-  <div class="menu-container">
-    <ejs-menu
-      #menuContainer
-      [items]="menuItems"
-      [animationSettings]="animationSettings"
-      orientation="Horizontal"
-      (select)="onClick($event)">
-    </ejs-menu>
+<div *ngIf="isLoggedIn()" class="container">
+  <nav class="navbar">
+    <ul class="nav-menu">
+      <li *ngFor="let item of menuItems" class="nav-item" [ngClass]="{'has-submenu': item.subItems}">
+        <span (click)="onClick(item)" class="nav-link">{{ item.text }}</span>
+        <ul *ngIf="item.subItems" class="submenu">
+          <li *ngFor="let subItem of item.subItems" class="submenu-item">
+            <span (click)="onClick(subItem)" class="submenu-link">{{ subItem.text }}</span>
+            <ul *ngIf="subItem.subItems" class="submenu">
+              <li *ngFor="let subSubItem of subItem.subItems" class="submenu-item">
+                <span (click)="onClick(subSubItem)" class="submenu-link">{{ subSubItem.text }}</span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  
+  <div class="content">
+    <router-outlet></router-outlet>
   </div>
 </div>
 
-<router-outlet></router-outlet>
+<div *ngIf="!isLoggedIn()">
+  <router-outlet></router-outlet>
+</div>

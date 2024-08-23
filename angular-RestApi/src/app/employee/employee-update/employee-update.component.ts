@@ -10,33 +10,42 @@ import { Employee } from '../employee.model';
 })
 export class EmployeeUpdateComponent implements OnInit {
   employee: Employee = {
-    empId: '',
+    empId: 0, // Initialize as a number
     empFname: '',
     empLname: '',
     age: 0,
     address: '',
     department: ''
   };
-  id!: number;
 
-  constructor(private employeeService: EmployeeService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    private employeeService: EmployeeService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.id = +this.route.snapshot.paramMap.get('id')!;
-    this.loadEmployee();
-  }
-
-  loadEmployee(): void {
-    this.employeeService.getEmployee(this.id).subscribe(
-      (data: Employee) => this.employee = data,
-      (error) => console.error(error)
-    );
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.employeeService.getEmployee(+id).subscribe(
+        (employee: Employee) => {
+          this.employee = employee;
+        },
+        error => {
+          console.error('Error fetching employee details', error);
+        }
+      );
+    }
   }
 
   updateEmployee(): void {
-    this.employeeService.updateEmployee(this.id, this.employee).subscribe(
-      () => this.router.navigate(['/employees']),
-      (error) => console.error(error)
+    this.employeeService.updateEmployee(this.employee.empId, this.employee).subscribe(
+      () => {
+        this.router.navigate(['/employees']);
+      },
+      error => {
+        console.error('Error updating employee', error);
+      }
     );
   }
 }
