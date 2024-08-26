@@ -46,8 +46,8 @@ export class AppComponent implements OnInit {
       text: 'Employee',
       subItems: [
         { text: 'Create', url: '/employees/create' },
-        { text: 'Update', url: '/employees/update' },
-        { text: 'Delete', url: '/employees/delete' },
+        { text: 'Update', url: '/employees/update/1' }, // Example of updating with a specific ID
+        { text: 'Delete', url: '/employees/delete/1' }, // Example of deleting with a specific ID
         { text: 'List', url: '/employees/list' }
       ]
     },

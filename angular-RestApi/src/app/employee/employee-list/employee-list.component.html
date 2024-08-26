@@ -1,30 +1,28 @@
-<div class="container">
-  <h2>Employee List</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Age</th>
-        <th>Address</th>
-        <th>Department</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let employee of employees">
-        <td>{{ employee.empId }}</td>
-        <td>{{ employee.empFname }}</td>
-        <td>{{ employee.empLname }}</td>
-        <td>{{ employee.age }}</td>
-        <td>{{ employee.address }}</td>
-        <td>{{ employee.department }}</td>
-        <td>
-          <button (click)="updateEmployee(employee.empId)" class="btn btn-warning btn-sm">Update</button>
-          <button (click)="deleteEmployee(employee.empId)" class="btn btn-danger btn-sm">Delete</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<h2>Employee List</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+      <th>Address</th>
+      <th>Department</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <td>{{ employee.empId }}</td>
+      <td>{{ employee.empFname }}</td>
+      <td>{{ employee.empLname }}</td>
+      <td>{{ employee.age }}</td>
+      <td>{{ employee.address }}</td>
+      <td>{{ employee.department }}</td>
+      <td>
+        <button (click)="updateEmployee(employee.empId)">Update</button>
+        <button (click)="deleteEmployee(employee.empId)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
