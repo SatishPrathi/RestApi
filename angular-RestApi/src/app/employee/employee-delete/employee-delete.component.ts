@@ -27,7 +27,7 @@ export class EmployeeDeleteComponent implements OnInit {
   deleteEmployee(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.employeeService.deleteEmployee(+id!).subscribe(
-      () => this.router.navigate(['/employees']),
+      () => this.router.navigate(['/employee']),
       error => console.error('Error deleting employee', error)
     );
   }

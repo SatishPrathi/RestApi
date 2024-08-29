@@ -7,7 +7,7 @@ import { EmployeeDeleteComponent } from './employee-delete/employee-delete.compo
 
 const routes: Routes = [
   {
-    path: 'employees',
+    path: 'employee',
     children: [
       { path: '', component: EmployeeListComponent }, // List employees
       { path: 'create', component: EmployeeCreateComponent }, // Create employee

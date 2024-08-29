@@ -41,7 +41,7 @@ export class EmployeeUpdateComponent implements OnInit {
   updateEmployee(): void {
     this.employeeService.updateEmployee(this.employee.empId, this.employee).subscribe(
       () => {
-        this.router.navigate(['/employees']);
+        this.router.navigate(['/employee']);
       },
       error => {
         console.error('Error updating employee', error);

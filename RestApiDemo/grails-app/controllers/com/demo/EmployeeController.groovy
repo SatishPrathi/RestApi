@@ -57,4 +57,14 @@ class EmployeeController extends RestfulController<Employee> {
             render(status: result.status, text: result.message)
         }
     }
+
+    // GET request to list all employees
+    def list() {
+        try {
+            def employees = Employee.list() // Fetch all employees from the database
+            respond employees, [status: 200] // Respond with the list of employees in JSON/XML format
+        } catch (Exception e) {
+            render(status: 500, text: "Internal server error: ${e.message}")
+        }
+    }
 }
