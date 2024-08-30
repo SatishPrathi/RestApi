@@ -25,7 +25,7 @@ export class AuthService {
         if (token) {
           localStorage.setItem('token', token);
           const userDetails = {
-            role: response.roles[0],
+            role: response.roles[0], // Adjust based on your response structure
             userName: response.username
           };
           localStorage.setItem('userDetails', JSON.stringify(userDetails));
@@ -51,15 +51,15 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
-  getUserDetails(): object {
-    return JSON.parse(localStorage.getItem('userDetails') || "{}");
+  getUserDetails(): any {
+    return JSON.parse(localStorage.getItem('userDetails') || '{}');
   }
 
   private redirectUser(role: string): void {
     if (role === "ROLE_EMPLOYEE") {
       this.router.navigate(['/employees']);
-    } else if (role === "ROLE_USER") {
-      this.router.navigate(['/welcome']);
+    } else if (role === "PRODUCT_OWNER" || role === "PRODUCT_ADMIN") {
+      this.router.navigate(['/products']);
     } else {
       this.router.navigate(['/login']); // Default case
     }

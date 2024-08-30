@@ -1,6 +1,3 @@
-<div>
-    <h2>Delete Employee</h2>
-    <p>Are you sure you want to delete the employee with ID: {{employee.empId}}?</p>
-    <button (click)="deleteEmployee()">Delete</button>
-  </div>
-  
+<p>Are you sure you want to delete the employee with ID: {{ empId }}?</p>
+<button (click)="deleteEmployee()">Yes, delete</button>
+<button (click)="cancel()">Cancel</button>

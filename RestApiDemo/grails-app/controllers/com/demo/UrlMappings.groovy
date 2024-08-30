@@ -12,6 +12,8 @@ class UrlMappings {
         "/employee/update"(controller: 'employee', action: 'update', method: 'PUT')
         "/employee/delete"(controller: 'employee', action: 'delete', method: 'DELETE')
         "/employee/list"(controller: 'employee', action: 'list', method: 'GET')
+        "/employee/get/$empId"(controller: 'employee', action: 'get', method: 'GET')
+        "/employee/save"(controller: 'employee', action: 'save', method: 'PUT')
 
 
 

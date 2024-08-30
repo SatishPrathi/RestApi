@@ -67,4 +67,48 @@ class EmployeeController extends RestfulController<Employee> {
             render(status: 500, text: "Internal server error: ${e.message}")
         }
     }
+
+    // GET request to retrieve a single employee by ID
+    def show(Long id) {
+        try {
+            def result = employeeService.getEmployeeById(id)
+            if (result.status == 200) {
+                respond result.employee, [status: result.status]
+            } else {
+                render(status: result.status, text: result.message)
+            }
+        } catch (Exception e) {
+            render(status: 500, text: "Internal server error: ${e.message}")
+        }
+    }
+
+    // GET method to retrieve an employee by empId
+    def get(Long empId) {
+        try {
+            def result = employeeService.getEmployeeById(empId)
+            if (result.status == 200) {
+                respond result.employee, [status: result.status]
+            } else {
+                render(status: result.status, text: result.message)
+            }
+        } catch (Exception e) {
+            render(status: 500, text: "Internal server error: ${e.message}")
+        }
+    }
+
+    // PUT method to update and save an employee
+    def save() {
+        def employeeParams = request.JSON
+        if (!employeeParams.empId) {
+            render(status: 400, text: "Employee empId must be provided.")
+            return
+        }
+
+        def result = employeeService.updateEmployee(employeeParams.empId, employeeParams)
+        if (result.status == 200) {
+            respond result.employee, [status: result.status]
+        } else {
+            render(status: result.status, text: result.message)
+        }
+    }
 }

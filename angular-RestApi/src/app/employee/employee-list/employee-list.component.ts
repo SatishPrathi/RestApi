@@ -30,7 +30,8 @@ export class EmployeeListComponent implements OnInit {
 
   deleteEmployee(empId: number): void {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.employeeService.deleteEmployee(empId).subscribe(
+      const encodedId = this.employeeService.encodeId(empId.toString());
+      this.employeeService.deleteEmployee(encodedId).subscribe(
         () => {
           this.employees = this.employees.filter(employee => employee.empId !== empId);
         },
@@ -42,6 +43,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   updateEmployee(empId: number): void {
-    this.router.navigate(['/employee/update', empId]);
+    const encodedId = this.employeeService.encodeId(empId.toString());
+    this.router.navigate(['/employee/update', encodedId]);
   }
 }

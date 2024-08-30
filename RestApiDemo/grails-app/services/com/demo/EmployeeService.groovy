@@ -71,4 +71,18 @@ class EmployeeService {
             return [status: 500, message: "Internal server error: ${e.message}"]
         }
     }
+
+    // Method to get employee by ID
+    Map getEmployeeById(Long id) {
+        try {
+            Employee employeeInstance = Employee.findById(id)
+            if (employeeInstance) {
+                return [status: 200, employee: employeeInstance]
+            } else {
+                return [status: 404, message: "Employee with ID $id not found."]
+            }
+        } catch (Exception e) {
+            return [status: 500, message: "Internal server error: ${e.message}"]
+        }
+    }
 }

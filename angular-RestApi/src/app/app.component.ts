@@ -8,78 +8,73 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  // Menu items array
-  public menuItems: any[] = [
-    {
-      text: 'Products',
-      subItems: [
-        {
-          text: 'Product User',
-          subItems: [
-            { text: 'Create', url: '/products/create' },
-            { text: 'Update', url: '/products/update' },
-            { text: 'Delete', url: '/products/delete' },
-            { text: 'List', url: '/products/list' }
-          ]
-        },
-        {
-          text: 'Product Owner',
-          subItems: [
-            { text: 'Create', url: '/products/create' },
-            { text: 'Update', url: '/products/update' },
-            { text: 'Delete', url: '/products/delete' },
-            { text: 'List', url: '/products/list' }
-          ]
-        },
-        {
-          text: 'Product Admin',
-          subItems: [
-            { text: 'Create', url: '/products/create' },
-            { text: 'Update', url: '/products/update' },
-            { text: 'Delete', url: '/products/delete' },
-            { text: 'List', url: '/products/list' }
-          ]
-        }
-      ]
-    },
-    {
-      text: 'Employee',
-      subItems: [
-        { text: 'Create', url: '/employees/create' },
-        { text: 'Update', url: '/employees/update/1' }, // Example of updating with a specific ID
-        { text: 'Delete', url: '/employees/delete/1' }, // Example of deleting with a specific ID
-        { text: 'List', url: '/employees/list' }
-      ]
-    },
-    {
-      text: 'About Us',
-      subItems: [
-        {
-          text: 'Company',
-          subItems: [
-            { text: 'History', url: '/about/history' },
-            { text: 'Mission', url: '/about/mission' },
-            { text: 'Vision', url: '/about/vision' }
-          ]
-        },
-        {
-          text: 'Team',
-          subItems: [
-            { text: 'Leadership', url: '/about/leadership' },
-            { text: 'Staff', url: '/about/staff' }
-          ]
-        }
-      ]
-    },
-    { text: 'Logoff' }
-  ];
+  public menuItems: any[] = [];
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
+    // Check if the user is logged in; if not, redirect to login
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/login']);
+    } else {
+      // Setup the menu based on the user's role
+      this.setupMenuBasedOnRole();
     }
+  }
+
+  private setupMenuBasedOnRole(): void {
+    // Fetch user details from AuthService
+    const userDetails = this.authService.getUserDetails();
+    const userRole = userDetails.role;
+
+    // Initialize an empty menuItems array
+    this.menuItems = [];
+
+    // Add role-specific menu items
+    if (userRole === 'ROLE_EMPLOYEE') {
+      this.menuItems.push({
+        text: 'Employee',
+        subItems: [
+          { text: 'Create', url: '/employees/create' },
+          { text: 'List', url: '/employees/list' }
+        ]
+      });
+    }
+
+    if (userRole === 'PRODUCT_OWNER' || userRole === 'PRODUCT_ADMIN') {
+      this.menuItems.push({
+        text: 'Products',
+        subItems: [
+          { text: 'Create', url: '/products/create' },
+          { text: 'List', url: '/products/list' }
+        ]
+      });
+    }
+
+    // Common menu items for all users
+    this.menuItems.push(
+      {
+        text: 'About Us',
+        subItems: [
+          {
+            text: 'Company',
+            subItems: [
+              { text: 'History', url: '/about/history' },
+              { text: 'Mission', url: '/about/mission' },
+              { text: 'Vision', url: '/about/vision' }
+            ]
+          },
+          {
+            text: 'Team',
+            subItems: [
+              { text: 'Leadership', url: '/about/leadership' },
+              { text: 'Staff', url: '/about/staff' }
+            ]
+          }
+        ]
+      },
+      { text: 'Logoff' }
+    );
   }
 
   public onClick(item: any): void {

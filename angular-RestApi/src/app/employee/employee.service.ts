@@ -15,19 +15,30 @@ export class EmployeeService {
     return this.http.get<Employee[]>(`${this.apiUrl}/employee/list`);
   }
 
-  getEmployee(id: number): Observable<Employee> {
-    return this.http.get<Employee>(`${this.apiUrl}/employee/${id}`);
+  getEmployee(empId: string): Observable<Employee> {
+    return this.http.get<Employee>(`${this.apiUrl}/employee/get/${empId}`);
   }
 
   createEmployee(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(`${this.apiUrl}/employee/create`, employee);
   }
 
-  updateEmployee(id: number, employee: Employee): Observable<Employee> {
-    return this.http.put<Employee>(`${this.apiUrl}/employee/update/${id}`, employee);
+  updateEmployee(employee: Employee): Observable<Employee> {
+    return this.http.put<Employee>(`${this.apiUrl}/employee/save`, employee, {
+      headers: { 'Content-Type': 'application/json' }
+    });
+  }
+  deleteEmployee(empId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/employee/delete/${empId}`);
   }
 
-  deleteEmployee(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/employee/delete/${id}`);
+  // Encode the ID (this could be a simple Base64 encoding or any other encoding mechanism)
+  encodeId(id: string): string {
+    return btoa(id); // Base64 encoding as an example
+  }
+
+  // Decode the ID
+  decodeId(encodedId: string): string {
+    return atob(encodedId); // Base64 decoding as an example
   }
 }

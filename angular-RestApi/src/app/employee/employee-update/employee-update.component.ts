@@ -10,7 +10,7 @@ import { Employee } from '../employee.model';
 })
 export class EmployeeUpdateComponent implements OnInit {
   employee: Employee = {
-    empId: 0, // Initialize as a number
+    empId: 0,
     empFname: '',
     empLname: '',
     age: 0,
@@ -25,9 +25,11 @@ export class EmployeeUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.employeeService.getEmployee(+id).subscribe(
+    const encodedId = this.route.snapshot.paramMap.get('id')!;
+    const empId = this.employeeService.decodeId(encodedId);
+
+    if (empId) {
+      this.employeeService.getEmployee(empId).subscribe(
         (employee: Employee) => {
           this.employee = employee;
         },
@@ -39,9 +41,9 @@ export class EmployeeUpdateComponent implements OnInit {
   }
 
   updateEmployee(): void {
-    this.employeeService.updateEmployee(this.employee.empId, this.employee).subscribe(
+    this.employeeService.updateEmployee(this.employee).subscribe(
       () => {
-        this.router.navigate(['/employee']);
+        this.router.navigate(['/employee/list']); // Redirect to employee list after successful update
       },
       error => {
         console.error('Error updating employee', error);
