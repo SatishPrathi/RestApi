@@ -9,11 +9,11 @@ class UrlMappings {
         "/product/delete"(controller: "product", action: "delete", method: "DELETE")
         "/product/list"(controller: "product", action: "list", method: "GET")
          "/employee/create"(controller: 'employee', action: 'create', method: 'POST')
-        "/employee/update"(controller: 'employee', action: 'update', method: 'PUT')
+        "/employee/update"(controller: 'employee', action: 'update', method: 'POST')
         "/employee/delete"(controller: 'employee', action: 'delete', method: 'DELETE')
         "/employee/list"(controller: 'employee', action: 'list', method: 'GET')
         "/employee/get/$empId"(controller: 'employee', action: 'get', method: 'GET')
-        "/employee/save"(controller: 'employee', action: 'save', method: 'PUT')
+        "/employee/save"(controller: 'employee', action: 'save', method: 'POST')
 
 
 

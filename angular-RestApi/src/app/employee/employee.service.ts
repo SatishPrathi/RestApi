@@ -24,10 +24,11 @@ export class EmployeeService {
   }
 
   updateEmployee(employee: Employee): Observable<Employee> {
-    return this.http.put<Employee>(`${this.apiUrl}/employee/save`, employee, {
+    return this.http.post<Employee>(`${this.apiUrl}/employee/save`, employee, {
       headers: { 'Content-Type': 'application/json' }
     });
   }
+
   deleteEmployee(empId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/employee/delete/${empId}`);
   }

@@ -33,21 +33,26 @@ export class EmployeeUpdateComponent implements OnInit {
         (employee: Employee) => {
           this.employee = employee;
         },
-        error => {
+        /*error => {
           console.error('Error fetching employee details', error);
-        }
+        }*/
       );
     }
   }
 
-  updateEmployee(): void {
-    this.employeeService.updateEmployee(this.employee).subscribe(
-      () => {
-        this.router.navigate(['/employee/list']); // Redirect to employee list after successful update
-      },
-      error => {
-        console.error('Error updating employee', error);
-      }
-    );
+  updateEmployee(form: any): void {
+    if (form.valid) {
+      console.log('Employee data before update:', this.employee);  // Log the data being sent
+      this.employeeService.updateEmployee(this.employee).subscribe(
+        () => {
+          this.router.navigate(['/employee/list']); // Redirect to employee list after successful update
+        },
+        /*error => {
+          console.error('Error updating employee', error);
+        }*/
+      );
+    } else {
+      console.error('Form is invalid');
+    }
   }
 }

@@ -26,7 +26,7 @@ class EmployeeController extends RestfulController<Employee> {
         }
     }
 
-    // PUT request to update an employee
+    // POST request to update an existing employee
     def update() {
         def employeeParams = request.JSON
         if (!employeeParams.empId) {
@@ -82,21 +82,7 @@ class EmployeeController extends RestfulController<Employee> {
         }
     }
 
-    // GET method to retrieve an employee by empId
-    def get(Long empId) {
-        try {
-            def result = employeeService.getEmployeeById(empId)
-            if (result.status == 200) {
-                respond result.employee, [status: result.status]
-            } else {
-                render(status: result.status, text: result.message)
-            }
-        } catch (Exception e) {
-            render(status: 500, text: "Internal server error: ${e.message}")
-        }
-    }
-
-    // PUT method to update and save an employee
+    // POST request to save an employee (could be used for both creation and update)
     def save() {
         def employeeParams = request.JSON
         if (!employeeParams.empId) {

@@ -1,18 +1,23 @@
-<form (ngSubmit)="updateEmployee()">
-  <label for="empFname">First Name:</label>
-  <input type="text" id="empFname" [(ngModel)]="employee.empFname" name="empFname" required>
-
-  <label for="empLname">Last Name:</label>
-  <input type="text" id="empLname" [(ngModel)]="employee.empLname" name="empLname" required>
-
-  <label for="age">Age:</label>
-  <input type="number" id="age" [(ngModel)]="employee.age" name="age" required>
-
-  <label for="address">Address:</label>
-  <input type="text" id="address" [(ngModel)]="employee.address" name="address" required>
-
-  <label for="department">Department:</label>
-  <input type="text" id="department" [(ngModel)]="employee.department" name="department" required>
-
+<form #form="ngForm" (ngSubmit)="updateEmployee(form)">
+  <div>
+    <label for="empFname">First Name:</label>
+    <input type="text" id="empFname" [(ngModel)]="employee.empFname" name="empFname" required />
+  </div>
+  <div>
+    <label for="empLname">Last Name:</label>
+    <input type="text" id="empLname" [(ngModel)]="employee.empLname" name="empLname" required />
+  </div>
+  <div>
+    <label for="age">Age:</label>
+    <input type="number" id="age" [(ngModel)]="employee.age" name="age" required />
+  </div>
+  <div>
+    <label for="address">Address:</label>
+    <input type="text" id="address" [(ngModel)]="employee.address" name="address" required />
+  </div>
+  <div>
+    <label for="department">Department:</label>
+    <input type="text" id="department" [(ngModel)]="employee.department" name="department" required />
+  </div>
   <button type="submit">Save</button>
 </form>
