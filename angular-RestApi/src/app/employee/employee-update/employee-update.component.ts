@@ -33,9 +33,9 @@ export class EmployeeUpdateComponent implements OnInit {
         (employee: Employee) => {
           this.employee = employee;
         },
-        /*error => {
+        error => {
           console.error('Error fetching employee details', error);
-        }*/
+        }
       );
     }
   }
@@ -47,9 +47,9 @@ export class EmployeeUpdateComponent implements OnInit {
         () => {
           this.router.navigate(['/employee/list']); // Redirect to employee list after successful update
         },
-        /*error => {
-          console.error('Error updating employee', error);
-        }*/
+        error => {
+          console.error('Error updating employee', error);  // Log the error if the update fails
+        }
       );
     } else {
       console.error('Form is invalid');
