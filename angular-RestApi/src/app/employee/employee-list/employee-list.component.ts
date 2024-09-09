@@ -28,6 +28,20 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
+  // Save the employee after editing the row
+  saveEmployee(employee: Employee): void {
+    this.employeeService.updateEmployee(employee).subscribe(
+      () => {
+        alert('Employee updated successfully');
+        this.loadEmployees(); // Optionally reload the list
+      },
+      error => {
+        console.error('Error updating employee', error);
+      }
+    );
+  }
+
+  // Delete the employee
   deleteEmployee(empId: number): void {
     if (confirm('Are you sure you want to delete this employee?')) {
       const encodedId = this.employeeService.encodeId(empId.toString());
@@ -40,10 +54,5 @@ export class EmployeeListComponent implements OnInit {
         }
       );
     }
-  }
-
-  updateEmployee(empId: number): void {
-    const encodedId = this.employeeService.encodeId(empId.toString());
-    this.router.navigate(['/employee/update', encodedId]);
   }
 }

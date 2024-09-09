@@ -23,6 +23,7 @@ export class EmployeeService {
     return this.http.post<Employee>(`${this.apiUrl}/employee/create`, employee);
   }
 
+  // Update employee details
   updateEmployee(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(`${this.apiUrl}/employee/save`, employee, {
       headers: { 'Content-Type': 'application/json' }
@@ -33,12 +34,10 @@ export class EmployeeService {
     return this.http.delete<void>(`${this.apiUrl}/employee/delete/${empId}`);
   }
 
-  // Encode the ID (this could be a simple Base64 encoding or any other encoding mechanism)
   encodeId(id: string): string {
     return btoa(id); // Base64 encoding as an example
   }
 
-  // Decode the ID
   decodeId(encodedId: string): string {
     return atob(encodedId); // Base64 decoding as an example
   }
