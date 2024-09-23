@@ -1,30 +1,21 @@
-<h2>Employee List</h2>
-<table class="table">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>First Name</th>
-      <th>Last Name</th>
-      <th>Age</th>
-      <th>Address</th>
-      <th>Department</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let employee of employees">
-      <td>{{ employee.empId }}</td>
-      <td><input type="text" [(ngModel)]="employee.empFname" /></td>
-      <td><input type="text" [(ngModel)]="employee.empLname" /></td>
-      <td><input type="number" [(ngModel)]="employee.age" /></td>
-      <td><input type="text" [(ngModel)]="employee.address" /></td>
-      <td><input type="text" [(ngModel)]="employee.department" /></td>
-      <td>
-        <!-- Save button to update employee -->
-        <button (click)="saveEmployee(employee)">Save</button>
-        <!-- Optional delete button -->
-        <button (click)="deleteEmployee(employee.empId)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
+<table>
+  <tr>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Age</th>
+    <th>Address</th>
+    <th>Department</th>
+    <th>Actions</th>
+  </tr>
+  <tr *ngFor="let employee of employees">
+    <td>{{ employee.empFname }}</td>
+    <td>{{ employee.empLname }}</td>
+    <td>{{ employee.age }}</td>
+    <td>{{ employee.address }}</td>
+    <td>{{ employee.department }}</td>
+    <td>
+      <button (click)="editEmployee(employee.empId)">Update</button>
+      <button (click)="deleteEmployee(employee.empId)">Delete</button>
+    </td>
+  </tr>
 </table>

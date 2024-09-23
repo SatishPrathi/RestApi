@@ -35,8 +35,8 @@ export class AppComponent implements OnInit {
       this.menuItems.push({
         text: 'Employee',
         subItems: [
-          { text: 'Create', url: '/employees/create' },
-          { text: 'List', url: '/employees/list' }
+          { text: 'Create', url: '/employee/create' },
+          { text: 'List', url: '/employee/list' }
         ]
       });
     }
@@ -82,9 +82,10 @@ export class AppComponent implements OnInit {
       this.authService.logout();
       this.router.navigate(['/login']);
     } else if (item.url) {
-      this.router.navigate([item.url]);
+      this.router.navigate([item.url]);  // Navigates to the item's URL
     }
   }
+  
 
   public isLoggedIn(): boolean {
     return this.authService.isLoggedIn();

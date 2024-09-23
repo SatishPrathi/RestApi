@@ -11,7 +11,7 @@ import { Employee } from '../employee.model';
 export class EmployeeListComponent implements OnInit {
   employees: Employee[] = [];
 
-  constructor(private employeeService: EmployeeService, private router: Router) { }
+  constructor(private employeeService: EmployeeService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -28,26 +28,18 @@ export class EmployeeListComponent implements OnInit {
     );
   }
 
-  // Save the employee after editing the row
-  saveEmployee(employee: Employee): void {
-    this.employeeService.updateEmployee(employee).subscribe(
-      () => {
-        alert('Employee updated successfully');
-        this.loadEmployees(); // Optionally reload the list
-      },
-      error => {
-        console.error('Error updating employee', error);
-      }
-    );
+  // Navigate to the employee update form for editing (No encoding, using empId directly)
+  editEmployee(empId: number): void {
+    this.router.navigate([`/employee/update/${empId}`]);
   }
 
-  // Delete the employee
+  // Delete the employee (No encoding, using empId directly)
   deleteEmployee(empId: number): void {
     if (confirm('Are you sure you want to delete this employee?')) {
-      const encodedId = this.employeeService.encodeId(empId.toString());
-      this.employeeService.deleteEmployee(encodedId).subscribe(
+      this.employeeService.deleteEmployee(empId).subscribe(
         () => {
           this.employees = this.employees.filter(employee => employee.empId !== empId);
+          alert('Employee deleted successfully');
         },
         error => {
           console.error('Error deleting employee', error);

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
+import { Employee } from '../employee.model';
 
 @Component({
   selector: 'app-employee-delete',
@@ -8,35 +9,39 @@ import { EmployeeService } from '../employee.service';
   styleUrls: ['./employee-delete.component.css']
 })
 export class EmployeeDeleteComponent implements OnInit {
-  empId: string = '';
+  empId!: number;
+  employee!: Employee;
 
   constructor(
     private employeeService: EmployeeService,
     private route: ActivatedRoute,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-    const encodedId = this.route.snapshot.paramMap.get('id')!;
-    this.empId = this.employeeService.decodeId(encodedId);
-
-    if (this.empId) {
-      this.employeeService.getEmployee(this.empId).subscribe(
-        employee => {
-          console.log('Employee details fetched:', employee);
-        },
-        error => {
-          console.error('Error fetching employee details', error);
-        }
-      );
+    // Get the empId from the route and convert it to a number
+    const encodedId = this.route.snapshot.paramMap.get('id');
+    if (encodedId) {
+      this.empId = +encodedId;  // Convert string to number using +
     }
+
+    // Fetch the employee details using the empId
+    this.employeeService.getEmployee(this.empId).subscribe(
+      (employee: Employee) => {
+        this.employee = employee;
+      },
+      error => {
+        console.error('Error fetching employee details', error);
+      }
+    );
   }
 
   deleteEmployee(): void {
     if (confirm('Are you sure you want to delete this employee?')) {
       this.employeeService.deleteEmployee(this.empId).subscribe(
         () => {
-          this.router.navigate(['/employee']);
+          alert('Employee deleted successfully');
+          this.router.navigate(['/employee/list']);  // Redirect to the employee list
         },
         error => {
           console.error('Error deleting employee', error);
@@ -45,7 +50,8 @@ export class EmployeeDeleteComponent implements OnInit {
     }
   }
 
+  // Add the cancel method
   cancel(): void {
-    this.router.navigate(['/employee']);
+    this.router.navigate(['/employee/list']);  // Navigate back to employee list
   }
 }
