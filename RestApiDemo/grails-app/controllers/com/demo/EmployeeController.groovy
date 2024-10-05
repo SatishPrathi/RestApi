@@ -34,7 +34,7 @@ class EmployeeController extends RestfulController<Employee> {
             return
         }
 
-        def result = employeeService.updateEmployee(employeeParams.empId, employeeParams)
+        def result = employeeService.updateEmployee(employeeParams.empId as String, employeeParams)
         if (result.status == 200) {
             respond result.employee, [status: result.status]
         } else {
@@ -50,9 +50,9 @@ class EmployeeController extends RestfulController<Employee> {
             return
         }
 
-        def result = employeeService.deleteEmployee(employeeParams.empId)
+        def result = employeeService.deleteEmployee(employeeParams.empId as String)
         if (result.status == 200) {
-            render(status: result.status, text: result.message)
+            render(status: 200, text: result.message)
         } else {
             render(status: result.status, text: result.message)
         }
@@ -61,14 +61,14 @@ class EmployeeController extends RestfulController<Employee> {
     // GET request to list all employees
     def list() {
         try {
-            def employees = Employee.list() // Fetch all employees from the database
-            respond employees, [status: 200] // Respond with the list of employees in JSON/XML format
+            def employees = Employee.list()
+            respond employees, [status: 200]
         } catch (Exception e) {
             render(status: 500, text: "Internal server error: ${e.message}")
         }
     }
 
-    // GET request to retrieve a single employee by ID
+    // GET request to retrieve a single employee by ID (Long)
     def show(Long id) {
         try {
             def result = employeeService.getEmployeeById(id)
@@ -82,15 +82,15 @@ class EmployeeController extends RestfulController<Employee> {
         }
     }
 
-    // POST request to save an employee (could be used for both creation and update)
-    def save() {
+    // POST request to retrieve a single employee by empId from the request body
+    def get() {
         def employeeParams = request.JSON
         if (!employeeParams.empId) {
             render(status: 400, text: "Employee empId must be provided.")
             return
         }
 
-        def result = employeeService.updateEmployee(employeeParams.empId, employeeParams)
+        def result = employeeService.getEmployeeByEmpId(employeeParams.empId as String)
         if (result.status == 200) {
             respond result.employee, [status: result.status]
         } else {

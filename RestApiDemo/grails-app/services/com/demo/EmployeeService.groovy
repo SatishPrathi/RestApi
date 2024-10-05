@@ -72,14 +72,28 @@ class EmployeeService {
         }
     }
 
-    // Method to get employee by ID
+    // Method to get employee by ID (Long)
     Map getEmployeeById(Long id) {
         try {
-            Employee employeeInstance = Employee.findById(id)
+            Employee employeeInstance = Employee.get(id)
             if (employeeInstance) {
                 return [status: 200, employee: employeeInstance]
             } else {
                 return [status: 404, message: "Employee with ID $id not found."]
+            }
+        } catch (Exception e) {
+            return [status: 500, message: "Internal server error: ${e.message}"]
+        }
+    }
+
+    // Method to get employee by empId (String)
+    Map getEmployeeByEmpId(String empId) {
+        try {
+            Employee employeeInstance = Employee.findByEmpId(empId)
+            if (employeeInstance) {
+                return [status: 200, employee: employeeInstance]
+            } else {
+                return [status: 404, message: "Employee with empId $empId not found."]
             }
         } catch (Exception e) {
             return [status: 500, message: "Internal server error: ${e.message}"]

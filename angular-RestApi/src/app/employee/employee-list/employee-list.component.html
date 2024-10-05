@@ -7,15 +7,15 @@
     <th>Department</th>
     <th>Actions</th>
   </tr>
-  <tr *ngFor="let employee of employees">
-    <td>{{ employee.empFname }}</td>
-    <td>{{ employee.empLname }}</td>
-    <td>{{ employee.age }}</td>
-    <td>{{ employee.address }}</td>
-    <td>{{ employee.department }}</td>
+  <tr *ngFor="let emp of employee">
+    <td>{{ emp.empFname }}</td>
+    <td>{{ emp.empLname }}</td>
+    <td>{{ emp.age }}</td>
+    <td>{{ emp.address }}</td>
+    <td>{{ emp.department }}</td>
     <td>
-      <button (click)="editEmployee(employee.empId)">Update</button>
-      <button (click)="deleteEmployee(employee.empId)">Delete</button>
+      <button (click)="editEmployee(emp.empId)">Update</button>
+      <button (click)="deleteEmployee(emp.empId)">Delete</button>
     </td>
   </tr>
 </table>
