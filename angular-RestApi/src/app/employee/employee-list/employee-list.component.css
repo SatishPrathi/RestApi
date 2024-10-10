@@ -1,27 +1,53 @@
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .table {
-    width: 100%;
-    margin-bottom: 1rem;
-    background-color: #fff;
-  }
-  
-  .table th,
-  .table td {
-    padding: 0.75rem;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
-  }
-  
-  .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9;
-  }
-  
-  .btn {
-    margin-right: 5px;
-  }
-  
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #009879;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+tr:nth-child(even) {
+  background-color: #f3f3f3;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Button styles */
+button {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button:first-child {
+  background-color: #4CAF50; /* Green for Update */
+  color: white;
+}
+
+button:last-child {
+  background-color: #f44336; /* Red for Delete */
+  color: white;
+}
