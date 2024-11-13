@@ -11,27 +11,32 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) {}
 
+  // Fetch list of employees
   getEmployees(): Observable<Employee[]> {
     return this.http.get<Employee[]>(`${this.apiUrl}/employee/list`);
   }
 
+  // Fetch employee by ID
   getEmployee(empId: number): Observable<Employee> {
-    return this.http.get<Employee>(`${this.apiUrl}/employee/get`);
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<Employee>(`${this.apiUrl}/employee/get`, { empId }, { headers });
   }
 
+  // Create a new employee
   createEmployee(employee: Employee): Observable<Employee> {
     return this.http.post<Employee>(`${this.apiUrl}/employee/create`, employee, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
 
-  // Update employee using PUT or PATCH method
+  // Update an existing employee
   updateEmployee(employee: Employee): Observable<Employee> {
     return this.http.put<Employee>(`${this.apiUrl}/employee/update/${employee.empId}`, employee, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
 
+  // Delete employee by ID
   deleteEmployee(empId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/employee/delete/${empId}`);
   }

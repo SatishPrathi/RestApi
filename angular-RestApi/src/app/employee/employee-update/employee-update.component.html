@@ -1,63 +1,32 @@
-<form #employeeForm="ngForm" (ngSubmit)="updateEmployee(employeeForm)">
+<div *ngIf="isLoading">Loading...</div>
+
+<form *ngIf="!isLoading" #employeeForm="ngForm" (ngSubmit)="updateEmployee(employeeForm)">
+  <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
   <div>
     <label for="empFname">First Name</label>
-    <input
-      type="text"
-      id="empFname"
-      [(ngModel)]="employee.empFname"
-      name="empFname"
-      required
-    />
+    <input type="text" id="empFname" [(ngModel)]="employee.empFname" name="empFname" required />
   </div>
 
   <div>
     <label for="empLname">Last Name</label>
-    <input
-      type="text"
-      id="empLname"
-      [(ngModel)]="employee.empLname"
-      name="empLname"
-      required
-    />
+    <input type="text" id="empLname" [(ngModel)]="employee.empLname" name="empLname" required />
   </div>
 
   <div>
     <label for="age">Age</label>
-    <input
-      type="number"
-      id="age"
-      [(ngModel)]="employee.age"
-      name="age"
-      required
-    />
+    <input type="number" id="age" [(ngModel)]="employee.age" name="age" required />
   </div>
 
   <div>
     <label for="address">Address</label>
-    <input
-      type="text"
-      id="address"
-      [(ngModel)]="employee.address"
-      name="address"
-      required
-    />
+    <input type="text" id="address" [(ngModel)]="employee.address" name="address" required />
   </div>
 
   <div>
     <label for="department">Department</label>
-    <input
-      type="text"
-      id="department"
-      [(ngModel)]="employee.department"
-      name="department"
-      required
-    />
+    <input type="text" id="department" [(ngModel)]="employee.department" name="department" required />
   </div>
 
   <button type="submit">Update</button>
-
-  <!-- Error Message Display -->
-  <div *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
-  </div>
 </form>

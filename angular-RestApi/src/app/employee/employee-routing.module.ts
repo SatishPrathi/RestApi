@@ -9,11 +9,11 @@ const routes: Routes = [
   {
     path: 'employee',
     children: [
-      { path: '', component: EmployeeListComponent }, // List employees
+      { path: '', redirectTo: 'list', pathMatch: 'full' }, // Default redirect to employee/list
+      { path: 'list', component: EmployeeListComponent }, // List employees
       { path: 'create', component: EmployeeCreateComponent }, // Create employee
-      { path: 'update/:id', component: EmployeeUpdateComponent }, // Update employee
-      { path: 'delete/:id', component: EmployeeDeleteComponent }, // Delete employee
-      { path: 'list', component: EmployeeListComponent } // List employees
+      { path: 'update/:empId', component: EmployeeUpdateComponent }, // Update employee by empId
+      { path: 'delete/:empId', component: EmployeeDeleteComponent } // Delete employee by empId
     ]
   }
 ];
@@ -23,4 +23,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class EmployeeRoutingModule { }
-

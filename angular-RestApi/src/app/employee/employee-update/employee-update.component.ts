@@ -18,8 +18,8 @@ export class EmployeeUpdateComponent implements OnInit {
     address: '',
     department: ''
   };
-
   errorMessage: string = '';
+  isLoading: boolean = false;
 
   constructor(
     private employeeService: EmployeeService,
@@ -28,34 +28,51 @@ export class EmployeeUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const empId = +this.route.snapshot.paramMap.get('id')!; // Parse ID from the URL
-    if (empId) {
-      this.employeeService.getEmployee(empId).subscribe(
-        (employee: Employee) => {
-          this.employee = employee;
-        },
-        error => {
-          console.error('Error fetching employee details:', error);
-          this.errorMessage = 'Error fetching employee details';
-        }
-      );
+    // Extract empId from URL
+    const empId = Number(this.route.snapshot.paramMap.get('empId')); // Use 'empId' as defined in routes
+    if (isNaN(empId) || empId <= 0) {
+      this.errorMessage = 'Invalid Employee ID';
+      return;
     }
+    // Fetch employee details
+    this.fetchEmployee(empId);
+  }
+
+  private fetchEmployee(empId: number): void {
+    this.isLoading = true;
+    this.employeeService.getEmployee(empId).subscribe(
+      (employee: Employee) => {
+        if (employee) {
+          this.employee = employee; // Update employee data
+        } else {
+          this.errorMessage = 'Employee not found';
+        }
+        this.isLoading = false;
+      },
+      error => {
+        this.errorMessage = 'Error fetching employee details';
+        this.isLoading = false;
+      }
+    );
   }
 
   updateEmployee(employeeForm: NgForm): void {
-    if (employeeForm.valid) {
-      this.employeeService.updateEmployee(this.employee).subscribe(
-        () => {
-          alert('Employee updated successfully');
-          this.router.navigate(['/employee/list']); // Redirect to employee list after success
-        },
-        error => {
-          console.error('Error updating employee:', error);
-          this.errorMessage = 'Error updating employee';
-        }
-      );
-    } else {
-      console.error('Form is invalid');
+    if (employeeForm.invalid) {
+      this.errorMessage = 'Please fill out the form correctly';
+      return;
     }
+
+    this.isLoading = true;
+    this.employeeService.updateEmployee(this.employee).subscribe(
+      () => {
+        alert('Employee updated successfully');
+        this.router.navigate(['/employee/list']); // Navigate back after success
+        this.isLoading = false;
+      },
+      error => {
+        this.errorMessage = 'Error updating employee';
+        this.isLoading = false;
+      }
+    );
   }
 }
