@@ -63,18 +63,20 @@ export class EmployeeUpdateComponent implements OnInit {
       this.errorMessage = 'Please fill out the form correctly';
       return;
     }
-
+  
     this.isLoading = true;
     this.employeeService.updateEmployee(this.employee).subscribe(
-      () => {
+      (updatedEmployee: Employee) => {
         alert('Employee updated successfully');
         this.router.navigate(['/employee/list']); // Navigate back after success
         this.isLoading = false;
       },
       error => {
+        console.error('Error updating employee:', error);
         this.errorMessage = 'Error updating employee';
         this.isLoading = false;
       }
     );
   }
+  
 }

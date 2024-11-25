@@ -49,6 +49,7 @@ export class EmployeeDeleteComponent implements OnInit {
       );
     }
   }
+  
 
   // Add the cancel method
   cancel(): void {

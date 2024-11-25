@@ -3,6 +3,12 @@
 <form *ngIf="!isLoading" #employeeForm="ngForm" (ngSubmit)="updateEmployee(employeeForm)">
   <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
 
+  <!-- Employee ID (Read-Only) -->
+  <div>
+    <label for="empId">Employee ID</label>
+    <input type="text" id="empId" [(ngModel)]="employee.empId" name="empId" readonly />
+  </div>
+
   <div>
     <label for="empFname">First Name</label>
     <input type="text" id="empFname" [(ngModel)]="employee.empFname" name="empFname" required />
@@ -28,5 +34,5 @@
     <input type="text" id="department" [(ngModel)]="employee.department" name="department" required />
   </div>
 
-  <button type="submit">Update</button>
+  <button type="submit">Save</button>
 </form>

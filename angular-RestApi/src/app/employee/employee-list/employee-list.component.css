@@ -1,53 +1,59 @@
-/* Table styles */
 table {
   width: 100%;
   border-collapse: collapse;
   margin: 20px 0;
-  font-size: 1em;
-  font-family: Arial, sans-serif;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  text-align: left;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
 }
 
 th, td {
   padding: 12px 15px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
 }
 
 th {
-  background-color: #009879;
-  color: #ffffff;
+  background-color: #4CAF50;
+  color: white;
   font-weight: bold;
 }
 
 tr:nth-child(even) {
-  background-color: #f3f3f3;
+  background-color: #f2f2f2;
 }
 
 tr:hover {
   background-color: #f1f1f1;
 }
 
-/* Button styles */
+td {
+  color: #333;
+}
+
 button {
-  padding: 8px 12px;
-  margin: 0 5px;
+  padding: 6px 12px;
+  font-size: 14px;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9em;
+  margin: 0 5px;
 }
 
-button:hover {
-  opacity: 0.9;
-}
-
-button:first-child {
-  background-color: #4CAF50; /* Green for Update */
+button:first-of-type {
+  background-color: #4CAF50;
   color: white;
 }
 
-button:last-child {
-  background-color: #f44336; /* Red for Delete */
+button:first-of-type:hover {
+  background-color: #45a049;
+}
+
+button:last-of-type {
+  background-color: #f44336;
   color: white;
+}
+
+button:last-of-type:hover {
+  background-color: #da190b;
 }
