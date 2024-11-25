@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class EmployeeUpdateComponent implements OnInit {
   employee: Employee = {
-    empId: 0,
+    empId: "",
     empFname: '',
     empLname: '',
     age: 0,
@@ -20,6 +20,7 @@ export class EmployeeUpdateComponent implements OnInit {
   };
   errorMessage: string = '';
   isLoading: boolean = false;
+  empId:string = "";
 
   constructor(
     private employeeService: EmployeeService,
@@ -28,17 +29,18 @@ export class EmployeeUpdateComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Extract empId from URL
-    const empId = Number(this.route.snapshot.paramMap.get('empId')); // Use 'empId' as defined in routes
-    if (isNaN(empId) || empId <= 0) {
+    // Extract empId from URL]
+
+    this.empId = this.route.snapshot.params['empId'] // Use 'empId' as defined in routes
+    if (!this.empId) {
       this.errorMessage = 'Invalid Employee ID';
       return;
     }
     // Fetch employee details
-    this.fetchEmployee(empId);
+    this.fetchEmployee(this.empId);
   }
 
-  private fetchEmployee(empId: number): void {
+  private fetchEmployee(empId: string): void {
     this.isLoading = true;
     this.employeeService.getEmployee(empId).subscribe(
       (employee: Employee) => {

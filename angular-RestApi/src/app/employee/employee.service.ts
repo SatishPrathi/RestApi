@@ -17,7 +17,7 @@ export class EmployeeService {
   }
 
   // Fetch employee by ID
-  getEmployee(empId: number): Observable<Employee> {
+  getEmployee(empId: string): Observable<Employee> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this.http.post<Employee>(`${this.apiUrl}/employee/get`, { empId }, { headers });
   }
@@ -37,7 +37,7 @@ export class EmployeeService {
   }
 
   // Delete employee by ID
-  deleteEmployee(empId: number): Observable<void> {
+  deleteEmployee(empId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/employee/delete/${empId}`);
   }
 }

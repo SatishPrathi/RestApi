@@ -37,7 +37,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   // Navigate to the employee update form for editing (No encoding, using empId directly)
-  editEmployee(empId: number): void {
+  editEmployee(empId: string): void {
     this.employeeService.getEmployee(empId).subscribe(
       (data: Employee) => {
         this.emp = data;
@@ -50,7 +50,7 @@ export class EmployeeListComponent implements OnInit {
   }
 
   // Delete the employee (No encoding, using empId directly)
-  deleteEmployee(empId: number): void {
+  deleteEmployee(empId: string): void {
     if (confirm('Are you sure you want to delete this employee?')) {
       this.employeeService.deleteEmployee(empId).subscribe(
         () => {
@@ -67,7 +67,7 @@ export class EmployeeListComponent implements OnInit {
 
 
  class Employee {
-  empId: number=0; // Ensure this is number if that's the expected type
+  empId: string=""; // Ensure this is number if that's the expected type
   empFname?: string;
   empLname?: string;
   age?: number=0;

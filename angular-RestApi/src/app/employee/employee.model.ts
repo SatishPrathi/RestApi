@@ -1,5 +1,5 @@
 export interface Employee {
-  empId: number; // Ensure this is number if that's the expected type
+  empId: string; // Ensure this is number if that's the expected type
   empFname: string;
   empLname: string;
   age: number;

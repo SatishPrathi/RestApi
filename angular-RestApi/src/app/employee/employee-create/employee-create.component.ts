@@ -9,7 +9,7 @@ import { Employee } from '../employee.model';
 })
 export class EmployeeCreateComponent implements OnInit {
   employee: Employee = {
-    empId: 0, // Initialize as a number
+    empId: "", // Initialize as a number
     empFname: '',
     empLname: '',
     age: 0,

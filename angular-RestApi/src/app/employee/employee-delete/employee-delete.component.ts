@@ -9,7 +9,7 @@ import { Employee } from '../employee.model';
   styleUrls: ['./employee-delete.component.css']
 })
 export class EmployeeDeleteComponent implements OnInit {
-  empId!: number;
+  empId!: string;
   employee!: Employee;
 
   constructor(
@@ -22,7 +22,7 @@ export class EmployeeDeleteComponent implements OnInit {
     // Get the empId from the route and convert it to a number
     const encodedId = this.route.snapshot.paramMap.get('id');
     if (encodedId) {
-      this.empId = +encodedId;  // Convert string to number using +
+      this.empId = encodedId;  // Convert string to number using +
     }
 
     // Fetch the employee details using the empId
