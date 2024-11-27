@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeCreateComponent } from './employee-create/employee-create.component';
 import { EmployeeUpdateComponent } from './employee-update/employee-update.component';
-import { EmployeeDeleteComponent } from './employee-delete/employee-delete.component'; // Import Delete Component
+import { EmployeeDeleteComponent } from './employee-delete/employee-delete.component';
 
 const routes: Routes = [
   {
@@ -12,7 +12,7 @@ const routes: Routes = [
       { path: '', redirectTo: 'list', pathMatch: 'full' }, // Default redirect to employee/list
       { path: 'list', component: EmployeeListComponent }, // List employees
       { path: 'create', component: EmployeeCreateComponent }, // Create employee
-      { path: 'update/:empId', component: EmployeeUpdateComponent }, // Update employee by empId
+      { path: 'update', component: EmployeeUpdateComponent }, // Update employee (no empId in URL)
       { path: 'delete/:empId', component: EmployeeDeleteComponent } // Delete employee by empId
     ]
   }
@@ -22,4 +22,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class EmployeeRoutingModule { }
+export class EmployeeRoutingModule {}

@@ -9,14 +9,12 @@ import { EmployeeService } from '../employee.service';
   styleUrls: ['./employee-list.component.css']
 })
 export class EmployeeListComponent implements OnInit {
-  employee:  Employee[] ; 
-  emp: Employee= new Employee;
+  employees: Employee[] = [];
 
-  constructor(private employeeService: EmployeeService, private router: Router ) {
-    this.employee=[];
-  //emp=new Employee();
-}
-
+  constructor(
+    private employeeService: EmployeeService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -25,52 +23,46 @@ export class EmployeeListComponent implements OnInit {
   loadEmployees(): void {
     this.employeeService.getEmployees().subscribe(
       (data: Employee[]) => {
-        this.employee = data;
-        console.log("employees:"+this.employee)
+        this.employees = data;
       },
       error => {
         console.error('Error loading employees', error);
       }
     );
-    this.router.navigate([`/employee/list`]);
-
   }
 
-  // Navigate to the employee update form for editing (No encoding, using empId directly)
   editEmployee(empId: string): void {
+    // Store employee data in localStorage or use a service
     this.employeeService.getEmployee(empId).subscribe(
       (data: Employee) => {
-        this.emp = data;
+        // Store employee details in localStorage
+        localStorage.setItem('currentEmployee', JSON.stringify(data));
+        this.router.navigate(['/employee/update']); // Navigate to the update route
       },
       error => {
-        console.error('Error loading employees', error);
+        console.error('Error loading employee', error);
       }
     );
-    this.router.navigate([`/employee/update/${empId}`]);
   }
 
-  // Delete the employee (No encoding, using empId directly)
-   // Delete employee
-   deleteEmployee(empId: string): void {
+  deleteEmployee(empId: string): void {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.employeeService.deleteEmployee(empId).subscribe({
-        next: () => {
-          alert('Employee deleted successfully.');
-          this.loadEmployees(); // Refresh the employee list
+      this.employeeService.deleteEmployee(empId).subscribe(
+        () => {
+          alert('Employee deleted successfully');
+          this.loadEmployees();
         },
-        error: (err) => {
-          console.error('Error deleting employee:', err);
+        error => {
+          console.error('Error deleting employee', error);
           alert('Employee deleted successfully.');
           this.loadEmployees(); // Refresh the employee list
+        
         }
-      });
+      );
     }
   }
-
 }
-
-
- class Employee {
+class Employee {
   empId: string=""; // Ensure this is number if that's the expected type
   empFname?: string;
   empLname?: string;

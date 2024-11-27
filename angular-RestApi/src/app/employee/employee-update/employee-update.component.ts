@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { EmployeeService } from '../employee.service';
 import { Employee } from '../employee.model';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-update',
@@ -11,7 +11,7 @@ import { NgForm } from '@angular/forms';
 })
 export class EmployeeUpdateComponent implements OnInit {
   employee: Employee = {
-    empId: "",
+    empId: '',
     empFname: '',
     empLname: '',
     age: 0,
@@ -20,42 +20,20 @@ export class EmployeeUpdateComponent implements OnInit {
   };
   errorMessage: string = '';
   isLoading: boolean = false;
-  empId:string = "";
 
   constructor(
     private employeeService: EmployeeService,
-    private route: ActivatedRoute,
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Extract empId from URL]
-
-    this.empId = this.route.snapshot.params['empId'] // Use 'empId' as defined in routes
-    if (!this.empId) {
-      this.errorMessage = 'Invalid Employee ID';
-      return;
+    // Retrieve the employee data stored in localStorage
+    const storedEmployee = JSON.parse(localStorage.getItem('currentEmployee') || '{}');
+    if (storedEmployee && storedEmployee.empId) {
+      this.employee = storedEmployee;  // Use the stored employee details
+    } else {
+      this.errorMessage = 'Employee data is missing';
     }
-    // Fetch employee details
-    this.fetchEmployee(this.empId);
-  }
-
-  private fetchEmployee(empId: string): void {
-    this.isLoading = true;
-    this.employeeService.getEmployee(empId).subscribe(
-      (employee: Employee) => {
-        if (employee) {
-          this.employee = employee; // Update employee data
-        } else {
-          this.errorMessage = 'Employee not found';
-        }
-        this.isLoading = false;
-      },
-      error => {
-        this.errorMessage = 'Error fetching employee details';
-        this.isLoading = false;
-      }
-    );
   }
 
   updateEmployee(employeeForm: NgForm): void {
@@ -63,12 +41,12 @@ export class EmployeeUpdateComponent implements OnInit {
       this.errorMessage = 'Please fill out the form correctly';
       return;
     }
-  
+
     this.isLoading = true;
     this.employeeService.updateEmployee(this.employee).subscribe(
       (updatedEmployee: Employee) => {
         alert('Employee updated successfully');
-        this.router.navigate(['/employee/list']); // Navigate back after success
+        this.router.navigate(['/employee/list']);  // Navigate back after success
         this.isLoading = false;
       },
       error => {
@@ -78,5 +56,4 @@ export class EmployeeUpdateComponent implements OnInit {
       }
     );
   }
-  
 }
