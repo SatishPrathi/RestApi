@@ -11,7 +11,7 @@ class UrlMappings {
 
         "/employee/create"(controller: 'employee', action: 'create', method: 'POST')
         "/employee/update"(controller: 'employee', action: 'update', method: 'POST')
-        "/employee/delete"(controller: 'employee', action: 'delete', method: 'DELETE')
+        "/employee/delete"(controller: 'employee', action: 'delete', method: 'POST')
         "/employee/list"(controller: 'employee', action: 'list', method: 'GET')
         "/employee/get"(controller: 'employee', action: 'get', method: 'POST') // Using empId in body
         "/employee/save"(controller: 'employee', action: 'save', method: 'POST')

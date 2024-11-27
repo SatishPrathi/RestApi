@@ -1,23 +1,25 @@
-<table>
-  <tr>
-    <th>ID</th>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Age</th>
-    <th>Address</th>
-    <th>Department</th>
-    <th>Actions</th>
-  </tr>
-  <tr *ngFor="let emp of employee">
-    <td>{{ emp.empId }}</td>
-    <td>{{ emp.empFname }}</td>
-    <td>{{ emp.empLname }}</td>
-    <td>{{ emp.age }}</td>
-    <td>{{ emp.address }}</td>
-    <td>{{ emp.department }}</td>
-    <td>
-      <button (click)="editEmployee(emp.empId)">Update</button>
-      <button (click)="deleteEmployee(emp.empId)">Delete</button>
-    </td>
-  </tr>
-</table>
+<div class="table-container">
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+      <th>Address</th>
+      <th>Department</th>
+      <th>Actions</th>
+    </tr>
+    <tr *ngFor="let emp of employee">
+      <td>{{ emp.empId }}</td>
+      <td>{{ emp.empFname }}</td>
+      <td>{{ emp.empLname }}</td>
+      <td>{{ emp.age }}</td>
+      <td>{{ emp.address }}</td>
+      <td>{{ emp.department }}</td>
+      <td>
+        <button (click)="editEmployee(emp.empId)">Update</button>
+        <button (click)="deleteEmployee(emp.empId)">Delete</button>
+      </td>
+    </tr>
+  </table>
+</div>

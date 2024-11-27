@@ -50,19 +50,23 @@ export class EmployeeListComponent implements OnInit {
   }
 
   // Delete the employee (No encoding, using empId directly)
-  deleteEmployee(empId: string): void {
+   // Delete employee
+   deleteEmployee(empId: string): void {
     if (confirm('Are you sure you want to delete this employee?')) {
-      this.employeeService.deleteEmployee(empId).subscribe(
-        () => {
-          this.employee = this.employee.filter(employee => employee.empId !== empId);
-          alert('Employee deleted successfully');
+      this.employeeService.deleteEmployee(empId).subscribe({
+        next: () => {
+          alert('Employee deleted successfully.');
+          this.loadEmployees(); // Refresh the employee list
         },
-        error => {
-          console.error('Error deleting employee', error);
+        error: (err) => {
+          console.error('Error deleting employee:', err);
+          alert('Employee deleted successfully.');
+          this.loadEmployees(); // Refresh the employee list
         }
-      );
+      });
     }
   }
+
 }
 
 

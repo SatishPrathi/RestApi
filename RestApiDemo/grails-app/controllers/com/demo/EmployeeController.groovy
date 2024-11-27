@@ -43,20 +43,21 @@ class EmployeeController extends RestfulController<Employee> {
     }
 
     // DELETE request to delete an employee
-    def delete() {
-        def employeeParams = request.JSON
-        if (!employeeParams.empId) {
-            render(status: 400, text: "Employee empId must be provided.")
-            return
-        }
-
-        def result = employeeService.deleteEmployee(employeeParams.empId as String)
-        if (result.status == 200) {
-            render(status: 200, text: result.message)
-        } else {
-            render(status: result.status, text: result.message)
-        }
+  def delete() {
+    def employeeParams = request.JSON
+    log.info("Received delete request with parameters: ${employeeParams}")
+    if (!employeeParams.empId) {
+        render(status: 400, text: "Employee empId must be provided.")
+        return
     }
+
+    def result = employeeService.deleteEmployee(employeeParams.empId as String)
+    if (result.status == 200) {
+        render(status: 200, text: result.message)
+    } else {
+        render(status: result.status, text: result.message)
+    }
+}
 
     // GET request to list all employees
     def list() {

@@ -36,10 +36,10 @@ export class EmployeeService {
     });
   }  
 
-   // Delete employee by ID
-   deleteEmployee(empId: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/employee/delete/${empId}`, {
+  deleteEmployee(empId: string): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/employee/delete`, { empId }, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     });
   }
+  
 }

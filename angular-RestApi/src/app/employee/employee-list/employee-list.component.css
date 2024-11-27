@@ -1,3 +1,10 @@
+.table-container {
+  /* Optional: max height, depending on your layout */
+  max-height: none; /* Ensures no fixed height, thus no scrolling */
+  overflow: hidden; /* Prevents scrolling */
+  padding: 10px;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
