@@ -1,66 +1,79 @@
+/* Styling the table container */
 .table-container {
-  /* Optional: max height, depending on your layout */
-  max-height: none; /* Ensures no fixed height, thus no scrolling */
-  overflow: hidden; /* Prevents scrolling */
-  padding: 10px;
+  max-height: none; /* No fixed height, no scroll */
+  overflow: hidden;
+  padding: 20px;
+  margin-top: 20px;
 }
 
-table {
+/* Styling the table */
+p-table {
   width: 100%;
-  border-collapse: collapse;
   margin: 20px 0;
-  font-size: 16px;
-  text-align: left;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  font-size: 14px;
 }
 
-th, td {
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-}
-
+/* Table header styling */
 th {
   background-color: #4CAF50;
   color: white;
   font-weight: bold;
+  padding: 10px 15px;
+  text-align: left;
 }
 
+/* Table body styling */
+td {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Alternating row background color */
 tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: #f9f9f9;
 }
 
+/* Hover effect for rows */
 tr:hover {
   background-color: #f1f1f1;
 }
 
-td {
-  color: #333;
-}
-
-button {
+/* Styling for action buttons in the last column */
+.action-buttons button {
   padding: 6px 12px;
   font-size: 14px;
-  border: none;
+  margin: 0 5px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 0 5px;
 }
 
-button:first-of-type {
-  background-color: #4CAF50;
+.action-buttons button.p-button-info {
+  background-color: #007BFF;
   color: white;
 }
 
-button:first-of-type:hover {
-  background-color: #45a049;
+.action-buttons button.p-button-info:hover {
+  background-color: #0056b3;
 }
 
-button:last-of-type {
-  background-color: #f44336;
+.action-buttons button.p-button-danger {
+  background-color: #dc3545;
   color: white;
 }
 
-button:last-of-type:hover {
-  background-color: #da190b;
+.action-buttons button.p-button-danger:hover {
+  background-color: #c82333;
+}
+
+/* Adjust pagination for better UI */
+.p-datatable-pagination {
+  margin-top: 10px;
+  justify-content: center;
+}
+
+/* Styling for the paginator component */
+.p-paginator {
+  margin: 10px 0;
 }

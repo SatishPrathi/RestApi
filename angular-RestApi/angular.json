@@ -27,10 +27,11 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@syncfusion/ej2-base/styles/material.css",
-  "node_modules/@syncfusion/ej2-buttons/styles/material.css",
-  "node_modules/@syncfusion/ej2-navigations/styles/material.css",
+  "node_modules/primeng/resources/themes/saga-blue/theme.css",  
+  "node_modules/primeng/resources/primeng.min.css",
+  "node_modules/primeicons/primeicons.css",
   "src/styles.css"
+
             ],
             "scripts": []
           },

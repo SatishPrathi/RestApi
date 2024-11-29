@@ -8,6 +8,10 @@ import { EmployeeUpdateComponent } from './employee-update/employee-update.compo
 import { EmployeeDeleteComponent } from './employee-delete/employee-delete.component'; // Make sure this is imported
 import { EmployeeRoutingModule } from './employee-routing.module';
 
+// PrimeNG modules
+import { TableModule } from 'primeng/table'; // Import PrimeNG Table module
+import { ButtonModule } from 'primeng/button'; // Import PrimeNG Button module
+
 @NgModule({
   declarations: [
     EmployeeListComponent,
@@ -18,7 +22,9 @@ import { EmployeeRoutingModule } from './employee-routing.module';
   imports: [
     CommonModule,
     FormsModule,
-    EmployeeRoutingModule
+    EmployeeRoutingModule,
+    TableModule, // Add PrimeNG Table module
+    ButtonModule // Add PrimeNG Button module
   ]
 })
 export class EmployeeModule { }

@@ -1,5 +1,8 @@
-<div class="table-container">
-  <table>
+<!-- Employee Table -->
+<p-table [value]="employees" [paginator]="true" [rows]="5" [resizableColumns]="true" class="p-datatable-gridlines">
+  
+  <!-- Header Section of the Table -->
+  <ng-template pTemplate="header">
     <tr>
       <th>ID</th>
       <th>First Name</th>
@@ -9,18 +12,24 @@
       <th>Department</th>
       <th>Actions</th>
     </tr>
-    <!-- Change 'employee' to 'employees' -->
-    <tr *ngFor="let emp of employees">
-      <td>{{ emp.empId }}</td>
-      <td>{{ emp.empFname }}</td>
-      <td>{{ emp.empLname }}</td>
-      <td>{{ emp.age }}</td>
-      <td>{{ emp.address }}</td>
-      <td>{{ emp.department }}</td>
-      <td>
-        <button (click)="editEmployee(emp.empId)">Update</button>
-        <button (click)="deleteEmployee(emp.empId)">Delete</button>
+  </ng-template>
+
+  <!-- Body Section of the Table -->
+  <ng-template pTemplate="body" let-employee>
+    <tr>
+      <td>{{ employee.empId }}</td>
+      <td>{{ employee.empFname }}</td>
+      <td>{{ employee.empLname }}</td>
+      <td>{{ employee.age }}</td>
+      <td>{{ employee.address }}</td>
+      <td>{{ employee.department }}</td>
+      <td class="action-buttons">
+        <!-- Button to Update Employee -->
+        <button pButton type="button" icon="pi pi-pencil" label="Update" class="p-button-text p-button-info" (click)="editEmployee(employee.empId)"></button>
+        
+        <!-- Button to Delete Employee -->
+        <button pButton type="button" icon="pi pi-trash" label="Delete" class="p-button-text p-button-danger" (click)="deleteEmployee(employee.empId)"></button>
       </td>
     </tr>
-  </table>
-</div>
+  </ng-template>
+</p-table>
