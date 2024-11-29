@@ -12,6 +12,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { AuthService } from './auth.service';
 import { RestService } from './rest/rest.service';
 import { AuthGuard } from './auth.guard';
+import { InvalidComponent } from './employee/invalid/invalid.component';
 //import { Page404Component } from './page404/page404.component';
 
 @NgModule({
@@ -19,6 +20,7 @@ import { AuthGuard } from './auth.guard';
     AppComponent,
     LoginComponent,
     WelcomeComponent,
+    InvalidComponent,
    // Page404Component
   ],
   imports: [

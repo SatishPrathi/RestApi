@@ -4,6 +4,7 @@ import { EmployeeListComponent } from './employee-list/employee-list.component';
 import { EmployeeCreateComponent } from './employee-create/employee-create.component';
 import { EmployeeUpdateComponent } from './employee-update/employee-update.component';
 import { EmployeeDeleteComponent } from './employee-delete/employee-delete.component';
+import { InvalidComponent } from './invalid/invalid.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
       { path: 'list', component: EmployeeListComponent }, // List employees
       { path: 'create', component: EmployeeCreateComponent }, // Create employee
       { path: 'update', component: EmployeeUpdateComponent }, // Update employee (no empId in URL)
-      { path: 'delete/:empId', component: EmployeeDeleteComponent } // Delete employee by empId
+      { path: 'delete/:empId', component: EmployeeDeleteComponent }, // Delete employee by empId
+      {path: '**', component: InvalidComponent}
     ]
   }
 ];
